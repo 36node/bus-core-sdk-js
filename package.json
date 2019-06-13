@@ -1,9 +1,9 @@
 {
   "name": "@36node/bus-core-sdk",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A SDK boilerplate.",
   "repository": {
-    "url": "zzswang/bus-core-sdk-js",
+    "url": "36node/bus-core-sdk-js",
     "type": "git"
   },
   "license": "MIT",
