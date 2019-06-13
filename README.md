@@ -1,17 +1,17 @@
-# @36node/bus-core-sdk-js
+# @36node/bus-core-sdk
 
 [![version][0]][1] [![downloads][2]][3]
 
 ## Install
 
 ```bash
-yarn add @36node/bus-core-sdk-js
+yarn add @36node/bus-core-sdk
 ```
 
 ## Usage
 
 ```js
-const SDK = require("@36node/bus-core-sdk-js");
+const SDK = require("@36node/bus-core-sdk");
 
 const sdk = new SDK({ base: "http://localhost:3000" });
 await sdk.pet.listPets();

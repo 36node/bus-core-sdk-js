@@ -1,5 +1,5 @@
 {
-  "name": "bus-core-sdk-js",
+  "name": "@36node/bus-core-sdk",
   "version": "0.0.0",
   "description": "A SDK boilerplate.",
   "repository": {
