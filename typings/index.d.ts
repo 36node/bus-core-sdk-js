@@ -9,6 +9,7 @@ declare class SDK {
 
   vehicle: SDK.VehicleAPI;
   line: SDK.LineAPI;
+  model: SDK.ModelAPI;
   producer: SDK.ProducerAPI;
 }
 
@@ -61,6 +62,12 @@ declare namespace SDK {
      * Delete a line by id
      */
     deleteLine(req: DeleteLineRequest): Promise<DeleteLineResponse>;
+  }
+  export interface ModelAPI {
+    /**
+     * 返回车辆品牌列表
+     */
+    listModels(req: ListModelsRequest): Promise<ListModelsResponse>;
   }
   export interface ProducerAPI {
     /**
@@ -181,6 +188,10 @@ declare namespace SDK {
     lineId: string;
   };
 
+  type ListModelsResponse = {
+    body: Array<string>;
+  };
+
   type ListProducersResponse = {
     body: Array<Producer>;
   };
@@ -213,6 +224,7 @@ declare namespace SDK {
     type: string;
     validTill: string;
     ns: string;
+    state: string;
   };
 
   type GeoLocation = {
@@ -271,7 +283,6 @@ declare namespace SDK {
 
   type Producer = {
     name: string;
-    modelBirefs: string;
     models: string;
   };
 

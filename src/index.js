@@ -168,7 +168,7 @@ export default class SDK {
 
       if (!lineId) throw new Error("lineId is required for getLine");
 
-      return fetch(`${this.base}/lines/${lineId}`, {
+      return fetch(`${this.base}/line/${lineId}`, {
         method: "get",
         headers: { Authorization: this.auth, ...headers },
       });
@@ -185,7 +185,7 @@ export default class SDK {
       if (!lineId) throw new Error("lineId is required for updateLine");
       if (!body) throw new Error("requetBody is required for updateLine");
 
-      return fetch(`${this.base}/lines/${lineId}`, {
+      return fetch(`${this.base}/line/${lineId}`, {
         method: "put",
         body,
         headers: { Authorization: this.auth, ...headers },
@@ -202,8 +202,27 @@ export default class SDK {
 
       if (!lineId) throw new Error("lineId is required for deleteLine");
 
-      return fetch(`${this.base}/lines/${lineId}`, {
+      return fetch(`${this.base}/line/${lineId}`, {
         method: "delete",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * model's methods
+   */
+  model = {
+    /**
+     * 返回车辆品牌列表
+     *
+     * @param {ListModelsRequest} req listModels request
+     * @returns {Promise<ListModelsResponse>} A paged array of vehicle model
+     */
+    listModels: (req = {}) => {
+      const { headers } = req;
+
+      return fetch(`${this.base}/models`, {
+        method: "get",
         headers: { Authorization: this.auth, ...headers },
       });
     },
