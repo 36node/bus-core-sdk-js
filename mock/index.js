@@ -26,6 +26,7 @@ const nsArr = [
  *
  * @param {object} opt mock options
  * @param {number} opt.vechicleCount how many vehicle to be generated
+ * @param {number} opt.ns 给定命名空间的数组
  */
 const mock = ({ vechicleCount = 100, ns = nsArr }) => {
   const lines = lineGenerate(ns);
