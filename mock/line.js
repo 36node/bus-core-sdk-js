@@ -21,7 +21,7 @@ const lines = [
   "52路(内环路)",
 ];
 
-const generate = (count, nsArr) =>
+const generate = nsArr =>
   lines.map(line => {
     return {
       id: faker.random.uuid(),
