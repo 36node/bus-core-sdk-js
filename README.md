@@ -14,7 +14,7 @@ yarn add @36node/bus-core-sdk
 const SDK = require("@36node/bus-core-sdk");
 
 const sdk = new SDK({ base: "http://localhost:3000" });
-await sdk.pet.listPets();
+await sdk.line.listLines();
 ```
 
 ## Test
