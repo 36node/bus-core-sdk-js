@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.9](https://github.com/36node/bus-core-sdk-js/compare/v0.1.8...v0.1.9) (2019-06-21)
+
+
+### Bug Fixes
+
+* add gps error vehicle state ([20f9c60](https://github.com/36node/bus-core-sdk-js/commit/20f9c60))
+
+
+
 ### [0.1.8](https://github.com/36node/bus-core-sdk-js/compare/v0.1.7...v0.1.8) (2019-06-20)
 
 
