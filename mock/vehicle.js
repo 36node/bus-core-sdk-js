@@ -23,9 +23,11 @@ const generate = (count, lines) =>
     const lifeYear = faker.random.number({ min: 8, max: 12 });
     const validTill = moment(plateAt).add(lifeYear, "years");
     const line = faker.random.arrayElement(lines);
+    const id = fakeString(13);
 
     return {
-      id: fakeString(13), // 车辆 VIN 码
+      id, // 车辆 VIN 码
+      vin: id, // 车辆vin码， 为了方便json-server查询
       brands: faker.company.companySuffix(), // 品牌
       capacity: faker.random.number({ min: 32, max: 64 }), // int32 额定载客人数
       emission: "UNKNOWN", //排放标准 c1~c3 国标I 国标II 国标III
