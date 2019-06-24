@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.10](https://github.com/36node/bus-core-sdk-js/compare/v0.1.9...v0.1.10) (2019-06-24)
+
+
+### Bug Fixes
+
+* add vin in mock data ([75cd50e](https://github.com/36node/bus-core-sdk-js/commit/75cd50e))
+
+
+
 ### [0.1.9](https://github.com/36node/bus-core-sdk-js/compare/v0.1.8...v0.1.9) (2019-06-21)
 
 
