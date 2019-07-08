@@ -28,8 +28,9 @@ const nsArr = [
  * @param {number} opt.vechicleCount how many vehicle to be generated
  * @param {number} opt.ns 给定命名空间的数组
  */
-const mock = ({ vechicleCount = 100, ns = nsArr }) => {
+const mock = ({ vechicleCount = 10, ns = nsArr }) => {
   const lines = lineGenerate(ns);
+
   const vehicles = vehicleGenerate(vechicleCount, lines);
 
   return {

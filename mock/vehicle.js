@@ -22,7 +22,7 @@ const generate = (count, lines) =>
     const plateAt = moment(faker.date.past());
     const lifeYear = faker.random.number({ min: 8, max: 12 });
     const validTill = moment(plateAt).add(lifeYear, "years");
-    const line = faker.random.arrayElement(lines);
+    const line = _.sample(lines);
     const id = fakeString(13);
 
     return {

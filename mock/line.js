@@ -19,15 +19,24 @@ const lines = [
   "62路(环路)",
   "52路(外环路)",
   "52路(内环路)",
+  "63路",
+  "89路",
+  "17路",
+  "23路",
+  "34路",
+  "120路",
+  "912路",
+  "412路",
+  "612路",
 ];
 
 const generate = nsArr =>
-  lines.map(line => {
+  lines.map((line, index) => {
     return {
       id: faker.random.uuid(),
       name: line,
       description: String, // 线路描述
-      ns: faker.random.arrayElement(nsArr),
+      ns: nsArr[index % nsArr.length],
       createdAt: faker.date.past().toISOString(),
       updatedAt: faker.date.future().toISOString(),
       stations: [],
