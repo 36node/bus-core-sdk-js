@@ -1,0 +1,660 @@
+openapi: "3.0.0"
+info:
+  version: 0.1.0
+  title: Bus Core Service
+  license:
+    name: MIT
+servers:
+  - url: https://bus.36node.com/api{basePath}
+    description: Bus Core server for UAT
+    variables:
+      basePath:
+        default: /core/v0
+paths:
+  /vehicles:
+    get:
+      summary: List all vehicles
+      operationId: listVehicles
+      tags:
+        - vehicle
+      parameters:
+        - name: _limit
+          in: query
+          description: How many items to return at one time (max 100)
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 10
+        - name: _offset
+          in: query
+          description: How many items to escape
+          required: false
+          schema:
+            type: integer
+            format: int32
+            default: 0
+        - name: _sort
+          in: query
+          description: Fields to sort
+          required: false
+          schema:
+            type: string
+        - name: _select
+          in: query
+          description: Specifies which document fields to include or exclude
+          required: false
+          schema:
+            type: integer
+        - name: line
+          in: query
+          description: Line of vehicle
+          required: false
+          schema:
+            type: string
+        - name: producer
+          in: query
+          description: 根据生产商查询车辆
+          required: false
+          schema:
+            type: string
+        - name: model
+          in: query
+          description: 根据车型查询车辆
+          required: false
+          schema:
+            type: string
+        - name: modelBrief
+          in: query
+          description: 根据车型简称查询车辆
+          required: false
+          schema:
+            type: string
+        - name: no_like
+          in: query
+          description: 根据自编码模糊查询车辆
+          required: false
+          schema:
+            type: string
+        - name: vin
+          in: query
+          description: 根据vin码查询车辆
+          required: false
+          schema:
+            type: string
+        - name: plate_like
+          in: query
+          description: 根据车牌号码模糊查询车辆
+          required: false
+          schema:
+            type: string
+        - name: ns_like
+          in: query
+          required: false
+          description: 根据车辆namespace查询
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A paged array of vehicles
+          headers:
+            X-Total-Count:
+              description: Total count of all warnings match the query
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Vehicle"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    post:
+      summary: Create a vehicle
+      operationId: createVehicle
+      tags:
+        - vehicle
+      requestBody:
+        description: Vehicle to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Vehicle"
+      responses:
+        "201":
+          description: The Vehicle created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /vehicles/{vehicleId}:
+    get:
+      summary: Get vehicle by vin(id)
+      operationId: getVehicle
+      tags:
+        - vehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: The vin of the vehicle to be retrieved
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The vehicle with given vin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    put:
+      summary: Update a vehicle by id
+      operationId: updateVehicle
+      tags:
+        - vehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: The id(vin) of vehicle
+          schema:
+            type: string
+      requestBody:
+        description: Vehicle to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Vehicle"
+      responses:
+        "200":
+          description: The vehicle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vehicle"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    delete:
+      description: Delete a vehicle by id
+      operationId: deleteVehicle
+      tags:
+        - vehicle
+      parameters:
+        - name: vehicleId
+          in: path
+          required: true
+          description: The id(vin) of vehicle
+          schema:
+            type: string
+      responses:
+        "204":
+          description: vehicle deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /lines:
+    get:
+      summary: List all lines
+      operationId: listLines
+      tags:
+        - line
+      parameters:
+        - name: _limit
+          in: query
+          description: How many items to return at one time
+          required: false
+          schema:
+            type: integer
+            format: int32
+        - name: _offset
+          in: query
+          description: How many items will be skip
+          required: false
+          schema:
+            type: string
+        - name: _select
+          in: query
+          description: Specifies which document fields to include or exclude
+          required: false
+          schema:
+            type: integer
+        - name: ns_like
+          in: query
+          description: Specifies which line namespace
+          schema:
+            type: string
+      responses:
+        "200":
+          description: A paged array of lines
+          headers:
+            X-Total-Count:
+              description: Total count of all documents match the query
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Line"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    post:
+      summary: Create a line
+      operationId: createLine
+      tags:
+        - line
+      requestBody:
+        description: Line to be created
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LineCreateBody"
+      responses:
+        "201":
+          description: The Vehicle created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Line"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /lines/{lineId}:
+    get:
+      summary: Get line by id
+      operationId: getLine
+      tags:
+        - line
+      parameters:
+        - name: lineId
+          in: path
+          required: true
+          description: The id of line
+          schema:
+            type: string
+      responses:
+        "200":
+          description: The line with given id
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Line"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    put:
+      summary: Update a line by id
+      operationId: updateLine
+      tags:
+        - line
+      parameters:
+        - name: lineId
+          in: path
+          required: true
+          description: The id of line
+          schema:
+            type: string
+      requestBody:
+        description: Line to be updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LineUpdateBody"
+      responses:
+        "200":
+          description: The line
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Line"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+    delete:
+      summary: Delete a line by id
+      operationId: deleteLine
+      tags:
+        - line
+      parameters:
+        - name: lineId
+          in: path
+          required: true
+          description: The id of line
+          schema:
+            type: string
+      responses:
+        "204":
+          description: line deleted
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+  /producers:
+    get:
+      summary: 返回生产商列表
+      operationId: listProducers
+      tags:
+        - producer
+      responses:
+        "200":
+          description: A paged array of vehicle producer
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Producer"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+        "500":
+          $ref: "#/components/responses/InternalError"
+
+security:
+  - bearerAuth: []
+
+components:
+  responses:
+    NoContent:
+      description: The resource was deleted successfully.
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Err"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Err"
+    InternalError:
+      description: unexpected error
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Err"
+    BasRequest:
+      description: bad request
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Err"
+
+  schemas:
+    Vehicle:
+      type: object
+      description: "车辆信息"
+      properties:
+        id:
+          type: string
+          description: 车辆vin码
+        createdAt:
+          type: string
+          format: date
+          description: "创建时间"
+        updatedAt:
+          type: string
+          format: date
+          description: "更新时间"
+        brands:
+          type: string
+          description: "品牌"
+        capacity:
+          type: integer
+          format: int32
+          description: "额定载客人数"
+        engineNo:
+          type: string
+          description: "发动机编号"
+        iccid:
+          type: string
+          description: "车辆 iccid 号"
+        length:
+          type: number
+          format: float
+          description: "车辆长度"
+        lifeYear:
+          type: integer
+          format: int32
+          description: "使用年限"
+        line:
+          type: string
+          description: "线路"
+        model:
+          type: string
+          description: "车型"
+        modelBrief:
+          type: string
+          description: "车型简称"
+        modified:
+          type: boolean
+          description: "是否改装"
+        no:
+          type: string
+          description: "自编号"
+        photos:
+          type: array
+          description: "车辆图片"
+          items:
+            type: string
+        place:
+          type: string
+          description: "停车位置"
+        plate:
+          type: string
+          description: "车牌"
+        plateAt:
+          type: string
+          format: date
+          description: "上牌日期"
+        powerBy:
+          type: string
+          description: "能源类型"
+        producer:
+          type: string
+          description: "生产商"
+        purchaseAt:
+          type: string
+          format: date
+          description: "购买日期"
+        remark:
+          type: string
+          description: "备注"
+        scrapped:
+          type: boolean
+          description: "是否报废"
+        seats:
+          type: integer
+          format: int32
+          description: "座位数"
+        type:
+          type: string
+          description: "客车类型，例如大型普通客车"
+        validTill:
+          type: string
+          format: date
+          description: "报废日期"
+        ns:
+          type: string
+          description: "车辆所属命名空间"
+        ## 车辆动态信息
+        state:
+          type: string
+          enum: ["UNKNOWN", "ONLINE", "OFFLINE", "GPS_ERROR"]
+          default: UNKNOWN
+          description: "未知(从未登录),在线,离线,GPS错误"
+
+    GeoLocation:
+      type: object
+      description: "位置"
+      properties:
+        lng:
+          type: number
+          format: float
+          description: "经度"
+        lat:
+          type: number
+          format: float
+          description: "纬度"
+
+    LineCreateBody:
+      type: object
+      description: "线路创建"
+      required:
+        - ns
+        - name
+      properties:
+        name:
+          type: string
+          description: "线路名称"
+        stations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Station"
+        ns:
+          type: array
+          description: "线路所属命名空间"
+          items:
+            type: string
+
+    LineUpdateBody:
+      type: object
+      description: "线路创建"
+      properties:
+        stations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Station"
+        ns:
+          type: array
+          description: "线路所属命名空间"
+          items:
+            type: string
+
+    Line:
+      type: object
+      description: "线路"
+      properties:
+        id:
+          type: string
+        createdAt:
+          type: string
+          format: date
+          description: "创建时间"
+        updatedAt:
+          type: string
+          format: date
+          description: "更新时间"
+        deleted:
+          type: boolean
+          default: false
+          description: "是否已经删除"
+        deletedAt:
+          type: string
+          format: date
+          description: "删除时间"
+        description:
+          type: string
+          description: 描述
+        name:
+          type: string
+          description: "线路名称"
+        stations:
+          type: array
+          items:
+            $ref: "#/components/schemas/Station"
+        ns:
+          type: string
+          description: "线路所属命名空间"
+
+    Station:
+      type: object
+      description: "站点"
+      properties:
+        name:
+          type: string
+          description: "站点名称"
+        location:
+          $ref: "#/components/schemas/GeoLocation"
+
+    Producer:
+      type: object
+      description: "生产商"
+      properties:
+        name:
+          type: string
+          description: 生产商名称
+        modelBirefs:
+          type: string
+          description: 车型简称
+          items:
+            type: string
+        models:
+          type: string
+          description: 车型全简称
+          items:
+            type: string
+
+    Err:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+  securitySchemes:
+    bearerAuth: # arbitrary name for the security scheme
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
