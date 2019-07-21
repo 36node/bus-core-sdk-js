@@ -37,6 +37,14 @@
     humps "^2.0.1"
     lodash "^4.17.11"
 
+"@36node/query-normalizr@^0.4.6":
+  version "0.4.6"
+  resolved "https://registry.yarnpkg.com/@36node/query-normalizr/-/query-normalizr-0.4.6.tgz#9e04db7643accf3d5db5259efb60466f5e1e3ae7"
+  integrity sha512-3AnXxgPEnq9RvI/yOvTirh4lopNdRo+09dhwy7rlDbl6rSupUFhtFauyxqJBxuCYP3FlKYm3kYV9G142tDXayw==
+  dependencies:
+    humps "^2.0.1"
+    lodash "^4.17.11"
+
 "@36node/sketch@^0.11.7":
   version "0.11.7"
   resolved "https://registry.yarnpkg.com/@36node/sketch/-/sketch-0.11.7.tgz#e5399c567f88ae53f8290fa4cde37fd0c4197645"
@@ -73,12 +81,12 @@
     tmp "^0.0.33"
     webpack-filter-warnings-plugin "^1.2.1"
 
-"@36node/swagen@^0.12.3":
-  version "0.12.3"
-  resolved "https://registry.yarnpkg.com/@36node/swagen/-/swagen-0.12.3.tgz#8eb71bb7c5cf3c2ee9851fddefb6b0c3dde53bb6"
-  integrity sha512-8/R5g2FF5CYgJUq7COO+sPlmk/PWlbsnIDMhWN1qQT0y9y0r1gGJgvSzwL1HD8tOwaLSKfl4rMI6C6bNqlGoKQ==
+"@36node/swagen@^0.13.3":
+  version "0.13.3"
+  resolved "https://registry.yarnpkg.com/@36node/swagen/-/swagen-0.13.3.tgz#ef80ac52b6c19c1a7735e92f0e0dc111a351b101"
+  integrity sha512-y7syOta8FLydmSpMf+loEbc6tf1k8G+8HX1rtiKlytK/0kR+Iwpvy1We4NMLEOA2yBIgG/kI3luusyFKvSyKJg==
   dependencies:
-    "@36node/query-normalizr" "^0.4.3"
+    "@36node/query-normalizr" "^0.4.6"
     handlebars "^4.0.12"
     handlebars-helpers "^0.10.0"
     js-yaml "^3.12.0"
