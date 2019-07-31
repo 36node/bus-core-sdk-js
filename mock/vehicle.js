@@ -35,7 +35,7 @@ const generate = (count, lines) =>
       iccid: fakeString(8), // 车辆 iccid 号
       length: faker.random.number({ min: 6, max: 16 }), // float 车辆长度
       lifeYear, // int32 使用年限
-      line: line.name, // 线路
+      line: line.id, // 线路
       model, // 车型
       modelBrief, // 车型简称
       modified: faker.random.boolean(), // 是否改装
