@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.15](https://github.com/36node/bus-core-sdk-js/compare/v0.1.14...v0.1.15) (2019-07-31)
+
+
+### Bug Fixes
+
+* eslint ([9577097](https://github.com/36node/bus-core-sdk-js/commit/9577097))
+
+
+
 ### [0.1.14](https://github.com/36node/bus-core-sdk-js/compare/v0.1.13...v0.1.14) (2019-07-31)
 
 
