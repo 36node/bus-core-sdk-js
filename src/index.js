@@ -25,7 +25,7 @@ export default class SDK {
    *
    * @param {Object} opt
    * @param {string} opt.base  base url
-   * @param {string} opt.token token fro authorization
+   * @param {string} opt.token token for authorization
    */
   constructor(opt = {}) {
     this.base = opt.base || "";
@@ -37,7 +37,7 @@ export default class SDK {
    */
   vehicle = {
     /**
-     * List all vehicles
+     * List all vehicles with filters
      *
      * @param {ListVehiclesRequest} req listVehicles request
      * @returns {Promise<ListVehiclesResponse>} A paged array of vehicles
@@ -46,7 +46,7 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/vehicles`, {
-        method: "get",
+        method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
@@ -63,7 +63,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for createVehicle");
 
       return fetch(`${this.base}/vehicles`, {
-        method: "post",
+        method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -80,7 +80,7 @@ export default class SDK {
       if (!vehicleId) throw new Error("vehicleId is required for getVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
-        method: "get",
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -93,12 +93,11 @@ export default class SDK {
     updateVehicle: (req = {}) => {
       const { vehicleId, headers, body } = req;
 
-      if (!vehicleId)
-        throw new Error("vehicleId is required for updateVehicle");
+      if (!vehicleId) throw new Error("vehicleId is required for updateVehicle");
       if (!body) throw new Error("requetBody is required for updateVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
-        method: "put",
+        method: "PATCH",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -112,11 +111,25 @@ export default class SDK {
     deleteVehicle: (req = {}) => {
       const { vehicleId, headers } = req;
 
-      if (!vehicleId)
-        throw new Error("vehicleId is required for deleteVehicle");
+      if (!vehicleId) throw new Error("vehicleId is required for deleteVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
-        method: "delete",
+        method: "DELETE",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Get statistics for vehicles
+     *
+     * @param {GetStatisticsRequest} req getStatistics request
+     * @returns {Promise<GetStatisticsResponse>} Statistics of an vehicle
+     */
+    getStatistics: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/statistics/vehilce`, {
+        method: "GET",
+        query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -135,7 +148,7 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/lines`, {
-        method: "get",
+        method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
@@ -152,7 +165,7 @@ export default class SDK {
       if (!body) throw new Error("requetBody is required for createLine");
 
       return fetch(`${this.base}/lines`, {
-        method: "post",
+        method: "POST",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -168,8 +181,8 @@ export default class SDK {
 
       if (!lineId) throw new Error("lineId is required for getLine");
 
-      return fetch(`${this.base}/line/${lineId}`, {
-        method: "get",
+      return fetch(`${this.base}/lines/${lineId}`, {
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -185,8 +198,8 @@ export default class SDK {
       if (!lineId) throw new Error("lineId is required for updateLine");
       if (!body) throw new Error("requetBody is required for updateLine");
 
-      return fetch(`${this.base}/line/${lineId}`, {
-        method: "put",
+      return fetch(`${this.base}/lines/${lineId}`, {
+        method: "PATCH",
         body,
         headers: { Authorization: this.auth, ...headers },
       });
@@ -202,27 +215,8 @@ export default class SDK {
 
       if (!lineId) throw new Error("lineId is required for deleteLine");
 
-      return fetch(`${this.base}/line/${lineId}`, {
-        method: "delete",
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-  };
-  /**
-   * model's methods
-   */
-  model = {
-    /**
-     * 返回车辆品牌列表
-     *
-     * @param {ListModelsRequest} req listModels request
-     * @returns {Promise<ListModelsResponse>} A paged array of vehicle model
-     */
-    listModels: (req = {}) => {
-      const { headers } = req;
-
-      return fetch(`${this.base}/models`, {
-        method: "get",
+      return fetch(`${this.base}/lines/${lineId}`, {
+        method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -241,7 +235,7 @@ export default class SDK {
       const { headers } = req;
 
       return fetch(`${this.base}/producers`, {
-        method: "get",
+        method: "GET",
         headers: { Authorization: this.auth, ...headers },
       });
     },

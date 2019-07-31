@@ -9,7 +9,6 @@ declare class SDK {
 
   vehicle: SDK.VehicleAPI;
   line: SDK.LineAPI;
-  model: SDK.ModelAPI;
   producer: SDK.ProducerAPI;
 }
 
@@ -21,7 +20,7 @@ declare namespace SDK {
 
   export interface VehicleAPI {
     /**
-     * List all vehicles
+     * List all vehicles with filters
      */
     listVehicles(req: ListVehiclesRequest): Promise<ListVehiclesResponse>;
     /**
@@ -40,6 +39,10 @@ declare namespace SDK {
      *
      */
     deleteVehicle(req: DeleteVehicleRequest): Promise<DeleteVehicleResponse>;
+    /**
+     * Get statistics for vehicles
+     */
+    getStatistics(req: GetStatisticsRequest): Promise<GetStatisticsResponse>;
   }
   export interface LineAPI {
     /**
@@ -63,12 +66,6 @@ declare namespace SDK {
      */
     deleteLine(req: DeleteLineRequest): Promise<DeleteLineResponse>;
   }
-  export interface ModelAPI {
-    /**
-     * 返回车辆品牌列表
-     */
-    listModels(req: ListModelsRequest): Promise<ListModelsResponse>;
-  }
   export interface ProducerAPI {
     /**
      * 返回生产商列表
@@ -84,26 +81,26 @@ declare namespace SDK {
       select?: number;
 
       filter: {
+        onsite?: string;
         line?: string;
         producer?: string;
-        model?: string;
         modelBrief?: string;
-        no: {
-          $regex?: string;
-        };
-        vin?: string;
-        plate: {
-          $regex?: string;
-        };
-        ns: {
-          $regex?: string;
-        };
+        num?: string;
+        id?: string;
+        plate?: string;
+        ns?:
+          | {
+              $regex: string;
+            }
+          | string;
+        loc?: string;
+        distance?: number;
       };
     };
   };
 
   type ListVehiclesResponse = {
-    body: Array<Vehicle>;
+    body: [Vehicle];
     headers: {
       xTotalCount: number;
     };
@@ -138,6 +135,24 @@ declare namespace SDK {
     vehicleId: string;
   };
 
+  type GetStatisticsRequest = {
+    query: {
+      select?: number;
+
+      filter: {
+        line?: string;
+        producer?: string;
+        ns: {
+          $regex?: string;
+        };
+      };
+    };
+  };
+
+  type GetStatisticsResponse = {
+    body: VehicleStatistics;
+  };
+
   type ListLinesRequest = {
     query: {
       limit?: number;
@@ -153,7 +168,7 @@ declare namespace SDK {
   };
 
   type ListLinesResponse = {
-    body: Array<Line>;
+    body: [Line];
     headers: {
       xTotalCount: string;
     };
@@ -188,105 +203,504 @@ declare namespace SDK {
     lineId: string;
   };
 
-  type ListModelsResponse = {
-    body: Array<string>;
-  };
-
   type ListProducersResponse = {
-    body: Array<Producer>;
+    body: [Producer];
   };
 
   type Vehicle = {
     id: string;
+    ns: string;
     createdAt: string;
     updatedAt: string;
+    reportedAt: string;
+    beatAt: string;
+    loginAt: string;
+    logoutAt: string;
+    onsite: boolean;
+    online: boolean;
+    repairing: boolean;
     brands: string;
     capacity: number;
+    no: string;
+    emission: "C1" | "C2" | "C3" | "C4" | "C5" | "C6";
     engineNo: string;
-    iccid: string;
+    expiredAt: string;
     length: number;
     lifeYear: number;
     line: string;
     model: string;
     modelBrief: string;
     modified: boolean;
-    no: string;
-    photos: Array<string>;
+    photos: [string];
     place: string;
     plate: string;
     plateAt: string;
-    powerBy: string;
+    powerBy: "FUEL" | "HYBIRD" | "DUAL-ENERGY" | "PHEV" | "E-REV" | "ELECTRIC";
     producer: string;
-    purchaseAt: string;
+    purchasedAt: string;
     remark: string;
     scrapped: boolean;
     seats: number;
     type: string;
-    validTill: string;
-    ns: string;
-    state: string;
+    session: string;
+    seq: number;
+    time: number;
+    platform: string;
+    command: string;
+    at: string;
+    sn: number;
+    iccid: string;
+    alert: {
+      maxLevel: number;
+      uas: {
+        ressChargeOver: boolean;
+        motorTemp: boolean;
+        highVolMuteStatus: boolean;
+        motorControlTemp: boolean;
+        dcdcStatus: boolean;
+        brake: boolean;
+        dcdcTemp: boolean;
+        insulation: boolean;
+        batteryBadConsistency: boolean;
+        ressNotMatch: boolean;
+        socJump: boolean;
+        socOver: boolean;
+        batteryLow: boolean;
+        batteryOver: boolean;
+        socLow: boolean;
+        ressVolLow: boolean;
+        ressVolOver: boolean;
+        batteryTempOver: boolean;
+        tempDiff: boolean;
+      };
+      ressLen: number;
+      ressList: [
+        {
+          type: number;
+          code: number;
+          level: number;
+        }
+      ];
+      mortorLen: number;
+      mortorList: [
+        {
+          type: number;
+          code: number;
+          level: number;
+        }
+      ];
+      engineLen: number;
+      engineList: [
+        {
+          type: number;
+          code: number;
+          level: number;
+        }
+      ];
+      otherLen: number;
+      otherList: [
+        {
+          type: number;
+          code: number;
+          level: number;
+        }
+      ];
+    };
+    customExt: {
+      dataLen: number;
+      pressure1: number;
+      pressure2: number;
+      batteryVoltage: number;
+      dcov: number;
+      dcoc: number;
+      dcTemp: number;
+      acTemp: number;
+      lftp: number;
+      lftt: number;
+      rftp: number;
+      rftt: number;
+      lr1tp: number;
+      lr1tt: number;
+      lr2tp: number;
+      lr2tt: number;
+      rr1tp: number;
+      rr1tt: number;
+      rr2tp: number;
+      rr2tt: number;
+      cv: number;
+      rc: number;
+      cp: number;
+      totalCharge: number;
+      totalDischarge: number;
+      instantPower: number;
+      bpiRes: number;
+      bniRes: number;
+      apTemp: number;
+      motorContTemp: number;
+      airMode: "OFF" | "WIND" | "HEATING" | "REFRIGERATION" | "ABNORMAL";
+      airTemp: number;
+      insideTemp: number;
+      outsideTemp: number;
+      middleDoorStatus: "CLOSE" | "OPEN" | "ABNORMAL";
+      frontDoorStatus: "CLOSE" | "OPEN" | "ABNORMAL";
+      handbrakeStatus: "OFF" | "ON" | "ABNORMAL";
+      keyPosition: "OFF" | "ACC" | "ON" | "START";
+    };
+    extreme: {
+      maxVoltageSubSysNo: number;
+      maxVoltageSingNo: number;
+      maxVoltage: number;
+      minVoltageSubSysNo: number;
+      minVoltageSingNo: number;
+      minVoltage: number;
+      maxNtcSubSysNo: number;
+      maxNtcNo: number;
+      maxNtc: number;
+      minNtcSubSysNo: number;
+      minNtcNo: number;
+      minNtc: number;
+    };
+    location: {
+      state: number;
+      lng: number;
+      lat: number;
+    };
+    motors: [
+      {
+        no: number;
+        status: "CONSUMPTION" | "GENERATION" | "OFF" | "READY" | "ABNORMAL";
+        controlTemp: number;
+        speed: number;
+        torque: number;
+        temp: number;
+        voltage: number;
+        current: number;
+      }
+    ];
+    overall: {
+      powerStatus: "ON" | "OFF" | "OTHER" | "ABNORMAL";
+      chargeStatus: "PARK_CHARGING" | "MOVE_CHARGING" | "UNCHARGED" | "CHARGED" | "ABNORMAL";
+      mode: "ELECTRIC" | "MIXED" | "FUEL" | "ABNORMAL";
+      speed: number;
+      mileage: number;
+      voltage: number;
+      current: number;
+      soc: number;
+      dcStatus: "ON" | "OFF" | "ABNORMAL";
+      shift:
+        | "N"
+        | "1"
+        | "2"
+        | "3"
+        | "4"
+        | "5"
+        | "6"
+        | "7"
+        | "8"
+        | "9"
+        | "10"
+        | "11"
+        | "12"
+        | "R"
+        | "D"
+        | "P";
+      resistance: number;
+      aptv: number;
+      brake: number;
+    };
+    tens: [
+      {
+        accPedal: number;
+        brake: number;
+        speed: number;
+        totalCurrent: number;
+      }
+    ];
+    adas: [
+      {
+        accPedal: number;
+        brake: number;
+        speed: number;
+        totalCurrent: number;
+        overSpeed: number;
+        lateralDistance: number;
+        verticalDistance: number;
+        relativeVelocity: number;
+        wheelWarning: boolean;
+        buzzerWarning: boolean;
+        pWarning: boolean;
+        rWarning: boolean;
+        lWarning: boolean;
+        cWarning: boolean;
+        cmcsLevel: number;
+        cmcs: "NORMAL" | "CLOSE" | "ABNORMAL";
+        crbs: boolean;
+        obstacleType: "VOID" | "PEOPLE" | "VEHICLE";
+      }
+    ];
   };
-
-  type GeoLocation = {
-    lng: number;
-    lat: number;
-  };
-
   type LineCreateBody = {
     name: string;
-    stations: Array<{
-      name: string;
-      location: {
-        lng: number;
-        lat: number;
-      };
-    }>;
-    ns: Array<string>;
+    stations: [
+      {
+        name: string;
+        location: {
+          state: number;
+          lng: number;
+          lat: number;
+        };
+      }
+    ];
+    ns: [string];
   };
-
   type LineUpdateBody = {
-    stations: Array<{
-      name: string;
-      location: {
-        lng: number;
-        lat: number;
-      };
-    }>;
-    ns: Array<string>;
+    stations: [
+      {
+        name: string;
+        location: {
+          state: number;
+          lng: number;
+          lat: number;
+        };
+      }
+    ];
+    ns: [string];
   };
-
   type Line = {
     id: string;
     createdAt: string;
     updatedAt: string;
-    deleted: boolean;
-    deletedAt: string;
     description: string;
     name: string;
-    stations: Array<{
-      name: string;
-      location: {
-        lng: number;
-        lat: number;
-      };
-    }>;
+    stations: [
+      {
+        name: string;
+        location: {
+          state: number;
+          lng: number;
+          lat: number;
+        };
+      }
+    ];
     ns: string;
   };
-
   type Station = {
     name: string;
     location: {
+      state: number;
       lng: number;
       lat: number;
     };
   };
-
   type Producer = {
     name: string;
+    modelBirefs: string;
     models: string;
   };
-
+  type Alert = {
+    maxLevel: number;
+    uas: {
+      ressChargeOver: boolean;
+      motorTemp: boolean;
+      highVolMuteStatus: boolean;
+      motorControlTemp: boolean;
+      dcdcStatus: boolean;
+      brake: boolean;
+      dcdcTemp: boolean;
+      insulation: boolean;
+      batteryBadConsistency: boolean;
+      ressNotMatch: boolean;
+      socJump: boolean;
+      socOver: boolean;
+      batteryLow: boolean;
+      batteryOver: boolean;
+      socLow: boolean;
+      ressVolLow: boolean;
+      ressVolOver: boolean;
+      batteryTempOver: boolean;
+      tempDiff: boolean;
+    };
+    ressLen: number;
+    ressList: [
+      {
+        type: number;
+        code: number;
+        level: number;
+      }
+    ];
+    mortorLen: number;
+    mortorList: [
+      {
+        type: number;
+        code: number;
+        level: number;
+      }
+    ];
+    engineLen: number;
+    engineList: [
+      {
+        type: number;
+        code: number;
+        level: number;
+      }
+    ];
+    otherLen: number;
+    otherList: [
+      {
+        type: number;
+        code: number;
+        level: number;
+      }
+    ];
+  };
+  type Fault = {
+    type: number;
+    code: number;
+    level: number;
+  };
+  type CustomExt = {
+    dataLen: number;
+    pressure1: number;
+    pressure2: number;
+    batteryVoltage: number;
+    dcov: number;
+    dcoc: number;
+    dcTemp: number;
+    acTemp: number;
+    lftp: number;
+    lftt: number;
+    rftp: number;
+    rftt: number;
+    lr1tp: number;
+    lr1tt: number;
+    lr2tp: number;
+    lr2tt: number;
+    rr1tp: number;
+    rr1tt: number;
+    rr2tp: number;
+    rr2tt: number;
+    cv: number;
+    rc: number;
+    cp: number;
+    totalCharge: number;
+    totalDischarge: number;
+    instantPower: number;
+    bpiRes: number;
+    bniRes: number;
+    apTemp: number;
+    motorContTemp: number;
+    airMode: "OFF" | "WIND" | "HEATING" | "REFRIGERATION" | "ABNORMAL";
+    airTemp: number;
+    insideTemp: number;
+    outsideTemp: number;
+    middleDoorStatus: "CLOSE" | "OPEN" | "ABNORMAL";
+    frontDoorStatus: "CLOSE" | "OPEN" | "ABNORMAL";
+    handbrakeStatus: "OFF" | "ON" | "ABNORMAL";
+    keyPosition: "OFF" | "ACC" | "ON" | "START";
+  };
+  type Extreme = {
+    maxVoltageSubSysNo: number;
+    maxVoltageSingNo: number;
+    maxVoltage: number;
+    minVoltageSubSysNo: number;
+    minVoltageSingNo: number;
+    minVoltage: number;
+    maxNtcSubSysNo: number;
+    maxNtcNo: number;
+    maxNtc: number;
+    minNtcSubSysNo: number;
+    minNtcNo: number;
+    minNtc: number;
+  };
+  type GeoLocation = {
+    state: number;
+    lng: number;
+    lat: number;
+  };
+  type Motor = {
+    no: number;
+    status: "CONSUMPTION" | "GENERATION" | "OFF" | "READY" | "ABNORMAL";
+    controlTemp: number;
+    speed: number;
+    torque: number;
+    temp: number;
+    voltage: number;
+    current: number;
+  };
+  type Overall = {
+    powerStatus: "ON" | "OFF" | "OTHER" | "ABNORMAL";
+    chargeStatus: "PARK_CHARGING" | "MOVE_CHARGING" | "UNCHARGED" | "CHARGED" | "ABNORMAL";
+    mode: "ELECTRIC" | "MIXED" | "FUEL" | "ABNORMAL";
+    speed: number;
+    mileage: number;
+    voltage: number;
+    current: number;
+    soc: number;
+    dcStatus: "ON" | "OFF" | "ABNORMAL";
+    shift:
+      | "N"
+      | "1"
+      | "2"
+      | "3"
+      | "4"
+      | "5"
+      | "6"
+      | "7"
+      | "8"
+      | "9"
+      | "10"
+      | "11"
+      | "12"
+      | "R"
+      | "D"
+      | "P";
+    resistance: number;
+    aptv: number;
+    brake: number;
+  };
+  type Adas = {
+    accPedal: number;
+    brake: number;
+    speed: number;
+    totalCurrent: number;
+    overSpeed: number;
+    lateralDistance: number;
+    verticalDistance: number;
+    relativeVelocity: number;
+    wheelWarning: boolean;
+    buzzerWarning: boolean;
+    pWarning: boolean;
+    rWarning: boolean;
+    lWarning: boolean;
+    cWarning: boolean;
+    cmcsLevel: number;
+    cmcs: "NORMAL" | "CLOSE" | "ABNORMAL";
+    crbs: boolean;
+    obstacleType: "VOID" | "PEOPLE" | "VEHICLE";
+  };
+  type TenSecond = {
+    accPedal: number;
+    brake: number;
+    speed: number;
+    totalCurrent: number;
+  };
+  type VehicleStatistics = {
+    onsite: number;
+    totalVehicles: number;
+    online: number;
+    onlineMax: number;
+    offline: number;
+    offlineMax: number;
+    charging: number;
+    chargingMax: number;
+    alertLevel3: number;
+    alertLevel3Max: number;
+    repairing: number;
+    repairingMax: number;
+    totalMileage: number;
+  };
   type Err = {
+    name: string;
     code: string;
     message: string;
   };
