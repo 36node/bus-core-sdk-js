@@ -93,7 +93,8 @@ export default class SDK {
     updateVehicle: (req = {}) => {
       const { vehicleId, headers, body } = req;
 
-      if (!vehicleId) throw new Error("vehicleId is required for updateVehicle");
+      if (!vehicleId)
+        throw new Error("vehicleId is required for updateVehicle");
       if (!body) throw new Error("requetBody is required for updateVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
@@ -111,7 +112,8 @@ export default class SDK {
     deleteVehicle: (req = {}) => {
       const { vehicleId, headers } = req;
 
-      if (!vehicleId) throw new Error("vehicleId is required for deleteVehicle");
+      if (!vehicleId)
+        throw new Error("vehicleId is required for deleteVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
         method: "DELETE",
