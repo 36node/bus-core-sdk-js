@@ -7,6 +7,7 @@ declare class SDK {
   token: string;
   auth: string;
 
+  command: SDK.CommandAPI;
   vehicle: SDK.VehicleAPI;
   line: SDK.LineAPI;
   producer: SDK.ProducerAPI;
@@ -18,6 +19,12 @@ declare namespace SDK {
     token?: string;
   }
 
+  export interface CommandAPI {
+    /**
+     * Send a command
+     */
+    sendCommand(req: SendCommandRequest): Promise<SendCommandResponse>;
+  }
   export interface VehicleAPI {
     /**
      * List all vehicles with filters
@@ -73,6 +80,14 @@ declare namespace SDK {
     listProducers(req: ListProducersRequest): Promise<ListProducersResponse>;
   }
 
+  type SendCommandRequest = {
+    body: Command;
+  };
+
+  type SendCommandResponse = {
+    body: Command;
+  };
+
   type ListVehiclesRequest = {
     query: {
       limit?: number;
@@ -82,6 +97,14 @@ declare namespace SDK {
 
       filter: {
         onsite?: string;
+        at: {
+          $gt?: string;
+          $lt?: string;
+        };
+        reportedAt: {
+          $gt?: string;
+          $lt?: string;
+        };
         line?: string;
         producer?: string;
         modelBrief?: string;
@@ -207,6 +230,14 @@ declare namespace SDK {
     body: [Producer];
   };
 
+  type Command = {
+    id: string;
+    flag: string;
+    command: string;
+    vin: string;
+    at: string;
+    body: {};
+  };
   type Vehicle = {
     id: string;
     ns: string;
@@ -361,6 +392,11 @@ declare namespace SDK {
       minNtc: number;
     };
     location: {
+      state: number;
+      lng: number;
+      lat: number;
+    };
+    earthLocation: {
       state: number;
       lng: number;
       lat: number;

@@ -33,6 +33,28 @@ export default class SDK {
   }
 
   /**
+   * command's methods
+   */
+  command = {
+    /**
+     * Send a command
+     *
+     * @param {SendCommandRequest} req sendCommand request
+     * @returns {Promise<SendCommandResponse>} The Command created
+     */
+    sendCommand: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for sendCommand");
+
+      return fetch(`${this.base}/commands`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
    * vehicle's methods
    */
   vehicle = {
