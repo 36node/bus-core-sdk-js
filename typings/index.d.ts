@@ -101,6 +101,14 @@ declare namespace SDK {
           $gt?: string;
           $lt?: string;
         };
+        chargeAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        alertLevel3At: {
+          $gt?: string;
+          $lt?: string;
+        };
         reportedAt: {
           $gt?: string;
           $lt?: string;
@@ -247,6 +255,8 @@ declare namespace SDK {
     beatAt: string;
     loginAt: string;
     logoutAt: string;
+    chargeAt: string;
+    alertLevel3At: string;
     onsite: boolean;
     online: boolean;
     repairing: boolean;
