@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.17](https://github.com/36node/bus-core-sdk-js/compare/v0.1.16...v0.1.17) (2019-08-22)
+
+
+### Features
+
+* add chargeAt and alertLevel3At ([8f1362a](https://github.com/36node/bus-core-sdk-js/commit/8f1362a))
+* add feature description ([4cf258b](https://github.com/36node/bus-core-sdk-js/commit/4cf258b))
+
 ### [0.1.16](https://github.com/36node/bus-core-sdk-js/compare/v0.1.15...v0.1.16) (2019-08-21)
 
 
