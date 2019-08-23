@@ -151,7 +151,7 @@ export default class SDK {
     getStatistics: (req = {}) => {
       const { query, headers } = req;
 
-      return fetch(`${this.base}/statistics/vehilce`, {
+      return fetch(`${this.base}/statistics/vehicles`, {
         method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },

@@ -731,19 +731,15 @@ declare namespace SDK {
     totalCurrent: number;
   };
   type VehicleStatistics = {
-    onsite: number;
+    onsiteVehicles: number;
     totalVehicles: number;
-    online: number;
-    onlineMax: number;
-    offline: number;
-    offlineMax: number;
-    charging: number;
-    chargingMax: number;
-    alertLevel3: number;
-    alertLevel3Max: number;
-    repairing: number;
-    repairingMax: number;
-    totalMileage: number;
+    onlineVehicles: number;
+    onlineVehiclesToday: number;
+    chargeVehicles: number;
+    chargeVehiclesToday: number;
+    alertLevel3Vehicles: number;
+    alertLevel3VehiclesToday: number;
+    totalVehiclesMileage: number;
   };
   type Err = {
     name: string;
