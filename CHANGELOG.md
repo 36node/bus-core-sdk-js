@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.18](https://github.com/36node/bus-core-sdk-js/compare/v0.1.17...v0.1.18) (2019-08-23)
+
+
+### Features
+
+* change vehicle statistics api ([786ef80](https://github.com/36node/bus-core-sdk-js/commit/786ef80))
+
 ### [0.1.17](https://github.com/36node/bus-core-sdk-js/compare/v0.1.16...v0.1.17) (2019-08-22)
 
 
