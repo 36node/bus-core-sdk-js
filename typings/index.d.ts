@@ -11,6 +11,7 @@ declare class SDK {
   vehicle: SDK.VehicleAPI;
   line: SDK.LineAPI;
   producer: SDK.ProducerAPI;
+  park: SDK.ParkAPI;
 }
 
 declare namespace SDK {
@@ -79,6 +80,12 @@ declare namespace SDK {
      */
     listProducers(req: ListProducersRequest): Promise<ListProducersResponse>;
   }
+  export interface ParkAPI {
+    /**
+     * List all parks with filters
+     */
+    listParks(req: ListParksRequest): Promise<ListParksResponse>;
+  }
 
   type SendCommandRequest = {
     body: Command;
@@ -126,6 +133,7 @@ declare namespace SDK {
           | string;
         loc?: string;
         distance?: number;
+        unit?: "km" | "m";
       };
     };
   };
@@ -236,6 +244,21 @@ declare namespace SDK {
 
   type ListProducersResponse = {
     body: [Producer];
+  };
+
+  type ListParksRequest = {
+    query: {
+      filter: {
+        ns?: string;
+      };
+    };
+  };
+
+  type ListParksResponse = {
+    body: [Park];
+    headers: {
+      xTotalCount: string;
+    };
   };
 
   type Command = {
@@ -598,6 +621,17 @@ declare namespace SDK {
         level: number;
       }
     ];
+  };
+  type Park = {
+    id: string;
+    name: string;
+    address: string;
+    location: {
+      state: number;
+      lng: number;
+      lat: number;
+    };
+    ns: string;
   };
   type Fault = {
     type: number;

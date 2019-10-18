@@ -13,9 +13,9 @@ export default class SDK {
    * @returns {string} auth header
    * */
   get auth() {
-    if (this.token) {
-      return `Bearer ${this.token}`;
-    }
+    let token = this.token;
+    if (typeof token === "function") token = token();
+    if (token) return `Bearer ${token}`;
 
     return "";
   }
@@ -260,6 +260,26 @@ export default class SDK {
 
       return fetch(`${this.base}/producers`, {
         method: "GET",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * park's methods
+   */
+  park = {
+    /**
+     * List all parks with filters
+     *
+     * @param {ListParksRequest} req listParks request
+     * @returns {Promise<ListParksResponse>} A paged array of parks
+     */
+    listParks: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/parks`, {
+        method: "GET",
+        query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
     },

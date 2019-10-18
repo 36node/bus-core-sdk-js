@@ -2,19 +2,19 @@
 # yarn lockfile v1
 
 
-"@36node/eslint-config@^0.6.2":
-  version "0.6.2"
-  resolved "https://registry.yarnpkg.com/@36node/eslint-config/-/eslint-config-0.6.2.tgz#e22826840561d01bdabe99b7c4d7b7180971d05b"
-  integrity sha512-3snMgXhXBk4w7DoXHWCetpfAnhGlWDmSgXiG28q26epslsnjEp2BMX9weFtIbVB0b54633WSTRlOHIgG49xVLA==
+"@36node/eslint-config@^0.6.4":
+  version "0.6.4"
+  resolved "https://registry.yarnpkg.com/@36node/eslint-config/-/eslint-config-0.6.4.tgz#36d7f83d9f19d7754f3752b5515fdd4bcda589c4"
+  integrity sha512-rY/BJcdrrM+4gKNU6YI/YYYwL0M3pn8v4HVCZDORKYerBW9aFtqBlIYduIaIE0N4IaIKhFPlQGyR4HBTJP0BbQ==
   dependencies:
     babel-eslint "10.0.1"
     eslint "^5.16.0"
-    eslint-config-prettier "4.2.0"
+    eslint-config-prettier "^6.4.0"
     eslint-config-react-app "^4.0.1"
     eslint-plugin-flowtype "2.50.1"
     eslint-plugin-import "2.16.0"
     eslint-plugin-jsx-a11y "6.2.1"
-    eslint-plugin-prettier "3.1.0"
+    eslint-plugin-prettier "^3.1.1"
     eslint-plugin-react "7.12.4"
     eslint-plugin-react-hooks "^1.5.0"
 
@@ -29,10 +29,10 @@
     node-fetch "^2.2.0"
     wxapp-http "^3.1.0"
 
-"@36node/mock-server@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.yarnpkg.com/@36node/mock-server/-/mock-server-0.0.9.tgz#8caeee07cf459f6a35ae448e1f88e9d2c5c3a380"
-  integrity sha512-jA1wZGtnumXR0DyoWB9+aXDytVi/nEwr2tCr+F4krqFU81WhATqTi0xad4W7T5FQ16tjeNxCvGXhjGYUnpGWIw==
+"@36node/mock-server@^0.0.15":
+  version "0.0.15"
+  resolved "https://registry.yarnpkg.com/@36node/mock-server/-/mock-server-0.0.15.tgz#f778a90b8b6a45e06bd16bce52e4ef8fded0eb86"
+  integrity sha512-ZiuXImO5ujUeDo+KdxPByIVdjtUdvtJOHdB+vgsb/K4UFeEbcv8Yfu/ShVrZ6jAxawRlvBLhyyZqCtnnMgGtSA==
   dependencies:
     express "^4.17.0"
     humps "^2.0.1"
@@ -40,21 +40,21 @@
     lodash "^4.17.11"
     moment "^2.24.0"
 
-"@36node/query-normalizr@^0.4.6":
-  version "0.4.6"
-  resolved "https://registry.yarnpkg.com/@36node/query-normalizr/-/query-normalizr-0.4.6.tgz#9e04db7643accf3d5db5259efb60466f5e1e3ae7"
-  integrity sha512-3AnXxgPEnq9RvI/yOvTirh4lopNdRo+09dhwy7rlDbl6rSupUFhtFauyxqJBxuCYP3FlKYm3kYV9G142tDXayw==
+"@36node/query-normalizr@^0.4.8":
+  version "0.4.8"
+  resolved "https://registry.yarnpkg.com/@36node/query-normalizr/-/query-normalizr-0.4.8.tgz#481323d4d2d51f3c5fd014e975ee297c0020b856"
+  integrity sha512-hVoU5xHDtV+KaMM1hR7GHq/3TyD39sznB0KrpMqvmWsn+qdXFc4ql6tw0x98jxHGBvyWAhGjIV2KRAnZJq5u4g==
   dependencies:
     humps "^2.0.1"
     lodash "^4.17.11"
 
-"@36node/sketch@^0.13.13":
-  version "0.13.13"
-  resolved "https://registry.yarnpkg.com/@36node/sketch/-/sketch-0.13.13.tgz#e5ccee7419849bf9deaa2087322a13e5d4bf2058"
-  integrity sha512-0jdCjOIyabSdXpbN+JZFKfP+/9f2jYWPdc8QTUfPYozkSXwhzG2dR7XPGkSHBH8RvIfzVZ1fTdFbdhhjqyDoOQ==
+"@36node/sketch@^0.13.26":
+  version "0.13.26"
+  resolved "https://registry.yarnpkg.com/@36node/sketch/-/sketch-0.13.26.tgz#b216d0c433c89591e4f5ddc42f11c087a1b22b69"
+  integrity sha512-MjRwV8UCGXCS/aqpbGK0syNR8lhWP/5KNM5AxolNNcAUk+9+jnqJobW5DB09l5fJoMxgdNvyahwPf9zmOYyYIQ==
   dependencies:
-    "@36node/mock-server" "^0.0.9"
-    "@36node/query-normalizr" "^0.4.6"
+    "@36node/mock-server" "^0.0.15"
+    "@36node/query-normalizr" "^0.4.8"
     "@babel/plugin-proposal-decorators" "7.4.4"
     babel-loader "8.0.5"
     babel-plugin-import "1.11.0"
@@ -72,8 +72,9 @@
     jest-styled-components "6.3.1"
     json-server "^0.15.0"
     jsonfile "^4.0.0"
+    klaw-sync "^6.0.0"
     lerna-alias "^3.0.2"
-    less "^3.9.0"
+    less "~3.9.0"
     less-loader "^4.1.0"
     lodash "^4.17.15"
     microbundle "0.11.0"
@@ -88,21 +89,22 @@
     rollup-plugin-replace "^1.1.1"
     tar "^4.4.4"
     tmp "^0.0.33"
+    webpack-dev-server "3.2.1"
     webpack-filter-warnings-plugin "^1.2.1"
 
-"@36node/swagen@^0.13.4":
-  version "0.13.4"
-  resolved "https://registry.yarnpkg.com/@36node/swagen/-/swagen-0.13.4.tgz#494fc414e4aa7c77082e24d275b79feef57a1766"
-  integrity sha512-uToyei0UUu+gP2HP6Ac2PMIbb+Mqi9QG5W0qzp53WQdL1Ggetzuejb5+zcFcrPCeRASp0oeZ4Vdu7sZJMTsv6A==
+"@36node/swagen@^0.13.8":
+  version "0.13.8"
+  resolved "https://registry.yarnpkg.com/@36node/swagen/-/swagen-0.13.8.tgz#f68563fe1c38e9f6a51653e867826c2a174cc93e"
+  integrity sha512-JrwjFQKltjpspU53m938LPPod2RHkPnQAsnw1dtPVYw6IRuRXyMw560wJua2vsIiqARqhyCkNNtF/bq6fexmvA==
   dependencies:
-    "@36node/query-normalizr" "^0.4.6"
+    "@36node/query-normalizr" "^0.4.8"
     handlebars "^4.0.12"
     handlebars-helpers "^0.10.0"
     js-yaml "^3.12.0"
     jsonfile "^5.0.0"
     lodash "^4.17.11"
     postman-collection "^3.3.0"
-    prettier "1.17.1"
+    prettier "^1.18.2"
     request "^2.88.0"
     require-directory "^2.1.1"
     swagger-parser "^6.0.1"
@@ -5032,10 +5034,10 @@ escodegen@^1.11.0, escodegen@^1.9.1:
   optionalDependencies:
     source-map "~0.6.1"
 
-eslint-config-prettier@4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-4.2.0.tgz#70b946b629cd0e3e98233fd9ecde4cb9778de96c"
-  integrity sha512-y0uWc/FRfrHhpPZCYflWC8aE0KRJRY04rdZVfl8cL3sEZmOYyaBdhdlQPjKZBnuRMyLVK+JUZr7HaZFClQiH4w==
+eslint-config-prettier@^6.4.0:
+  version "6.4.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-6.4.0.tgz#0a04f147e31d33c6c161b2dd0971418ac52d0477"
+  integrity sha512-YrKucoFdc7SEko5Sxe4r6ixqXPDP1tunGw91POeZTTRKItf/AMFYt/YLEQtZMkR2LVpAVhcAcZgcWpm1oGPW7w==
   dependencies:
     get-stdin "^6.0.0"
 
@@ -5110,10 +5112,10 @@ eslint-plugin-jsx-a11y@6.2.1:
     has "^1.0.3"
     jsx-ast-utils "^2.0.1"
 
-eslint-plugin-prettier@3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.0.tgz#8695188f95daa93b0dc54b249347ca3b79c4686d"
-  integrity sha512-XWX2yVuwVNLOUhQijAkXz+rMPPoCr7WFiAl8ig6I7Xn+pPVhDhzg4DxHpmbeb0iqjO9UronEA3Tb09ChnFVHHA==
+eslint-plugin-prettier@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.1.1.tgz#507b8562410d02a03f0ddc949c616f877852f2ba"
+  integrity sha512-A+TZuHZ0KU0cnn56/9mfR7/KjUJ9QNVXUhwvRFSR7PGPe0zQR6PTkmyqg1AtUUEOzTqeRsUwyKFh0oVZKVCrtA==
   dependencies:
     prettier-linter-helpers "^1.0.0"
 
@@ -8254,6 +8256,13 @@ kind-of@^6.0.0, kind-of@^6.0.2:
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.2.tgz#01146b36a6218e64e58f3a8d66de5d7fc6f6d051"
   integrity sha512-s5kLOcnH0XqDO+FvuaLX8DDjZ18CGFk7VygH40QoKPUQhW4e2rvM0rwUq0t8IQDOwYSeLK01U90OjzBTme2QqA==
 
+klaw-sync@^6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/klaw-sync/-/klaw-sync-6.0.0.tgz#1fd2cfd56ebb6250181114f0a581167099c2b28c"
+  integrity sha512-nIeuVSzdCCs6TDPTqI8w1Yre34sSq7AkZ4B3sfOBbI2CgVSB4Du4aLQijFU2+lhAFCwt9+42Hel6lQNIv6AntQ==
+  dependencies:
+    graceful-fs "^4.1.11"
+
 kleur@^3.0.2:
   version "3.0.3"
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
@@ -8326,7 +8335,7 @@ less-loader@^4.1.0:
     loader-utils "^1.1.0"
     pify "^3.0.0"
 
-less@^3.9.0:
+less@~3.9.0:
   version "3.9.0"
   resolved "https://registry.yarnpkg.com/less/-/less-3.9.0.tgz#b7511c43f37cf57dc87dffd9883ec121289b1474"
   integrity sha512-31CmtPEZraNUtuUREYjSqRkeETFdyEHSEPAGq4erDlUXtda7pzNmctdljdIagSb589d/qXGWiiP31R5JVf+v0w==
@@ -11365,12 +11374,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@1.17.1:
-  version "1.17.1"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.17.1.tgz#ed64b4e93e370cb8a25b9ef7fef3e4fd1c0995db"
-  integrity sha512-TzGRNvuUSmPgwivDqkZ9tM/qTGW9hqDKWOE9YHiyQdixlKbv7kvEqsmDPrcHJTKwthU774TQwZXVtaQ/mMsvjg==
-
-prettier@1.18.2:
+prettier@1.18.2, prettier@^1.18.2:
   version "1.18.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.18.2.tgz#6823e7c5900017b4bd3acf46fe9ac4b4d7bda9ea"
   integrity sha512-OeHeMc0JhFE9idD4ZdtNibzY0+TPHSpSSb9h8FqtP+YnoZZ1sl8Vc9b1sasjfymH3SonAF4QcA2+mzHPhMvIiw==

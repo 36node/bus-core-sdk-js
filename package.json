@@ -24,7 +24,7 @@
   "scripts": {
     "build": "sketch build",
     "format": "prettier --trailing-comma es5 --write 'src/**/*.js'",
-    "gen": "swagen sdk ../bus-core/openapi.yml",
+    "gen": "swagen sdk https://api.uat.bus.36node.com/core/v0/openapi.yml",
     "lint": "sketch lint src --fix",
     "release": "standard-version",
     "start": "bin/json-server.js",
@@ -50,15 +50,15 @@
   },
   "dependencies": {
     "@36node/fetch": "^0.6.4",
-    "@36node/query-normalizr": "^0.4.6",
+    "@36node/query-normalizr": "^0.4.8",
     "@types/jest": "^24.0.18",
     "commander": "^3.0.0",
     "randomstring": "^1.1.5"
   },
   "devDependencies": {
-    "@36node/eslint-config": "^0.6.2",
-    "@36node/sketch": "^0.13.13",
-    "@36node/swagen": "^0.13.4",
+    "@36node/eslint-config": "^0.6.4",
+    "@36node/sketch": "^0.13.26",
+    "@36node/swagen": "^0.13.8",
     "@commitlint/cli": "^8.1.0",
     "@commitlint/config-conventional": "^8.1.0",
     "@types/lodash": "^4.14.137",
