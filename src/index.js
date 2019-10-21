@@ -284,4 +284,24 @@ export default class SDK {
       });
     },
   };
+  /**
+   * banci's methods
+   */
+  banci = {
+    /**
+     * List all bancis with filters
+     *
+     * @param {ListBancisRequest} req listBancis request
+     * @returns {Promise<ListBancisResponse>} A paged array of parks
+     */
+    listBancis: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/bancis`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }

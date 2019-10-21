@@ -12,6 +12,7 @@ declare class SDK {
   line: SDK.LineAPI;
   producer: SDK.ProducerAPI;
   park: SDK.ParkAPI;
+  banci: SDK.BanciAPI;
 }
 
 declare namespace SDK {
@@ -85,6 +86,12 @@ declare namespace SDK {
      * List all parks with filters
      */
     listParks(req: ListParksRequest): Promise<ListParksResponse>;
+  }
+  export interface BanciAPI {
+    /**
+     * List all bancis with filters
+     */
+    listBancis(req: ListBancisRequest): Promise<ListBancisResponse>;
   }
 
   type SendCommandRequest = {
@@ -256,6 +263,22 @@ declare namespace SDK {
 
   type ListParksResponse = {
     body: [Park];
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
+  type ListBancisRequest = {
+    query: {
+      filter: {
+        q?: string;
+        date?: string;
+      };
+    };
+  };
+
+  type ListBancisResponse = {
+    body: [Banci];
     headers: {
       xTotalCount: string;
     };
@@ -774,6 +797,26 @@ declare namespace SDK {
     alertLevel3Vehicles: number;
     alertLevel3VehiclesToday: number;
     totalVehiclesMileage: number;
+  };
+  type Banci = {
+    banciSource: "CHONGMING_BANCI" | "SHANGHAI_BANCI";
+    vehicle: string;
+    ns: string;
+    date: string;
+    line: string;
+    plate: string;
+    driverNo: string;
+    driverName: string;
+    departAt: string;
+    arriveAt: string;
+    departPlace: string;
+    arrivePlace: string;
+    mileage: number;
+    remark: string;
+    type: string;
+    sfyy: string;
+    ldlx: string;
+    sxx: string;
   };
   type Err = {
     name: string;
