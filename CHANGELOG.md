@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.22](https://github.com/36node/bus-core-sdk-js/compare/v0.1.21...v0.1.22) (2019-10-24)
+
+
+### Features
+
+* add warning api ([f9a25ca](https://github.com/36node/bus-core-sdk-js/commit/f9a25ca))
+
 ### [0.1.21](https://github.com/36node/bus-core-sdk-js/compare/v0.1.20...v0.1.21) (2019-10-21)
 
 
