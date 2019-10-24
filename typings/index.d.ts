@@ -13,6 +13,7 @@ declare class SDK {
   producer: SDK.ProducerAPI;
   park: SDK.ParkAPI;
   banci: SDK.BanciAPI;
+  warning: SDK.WarningAPI;
 }
 
 declare namespace SDK {
@@ -93,6 +94,16 @@ declare namespace SDK {
      */
     listBancis(req: ListBancisRequest): Promise<ListBancisResponse>;
   }
+  export interface WarningAPI {
+    /**
+     * List all warnings
+     */
+    listWarnings(req: ListWarningsRequest): Promise<ListWarningsResponse>;
+    /**
+     * 获取车辆最新的warning
+     */
+    listLatestWarnings(req: ListLatestWarningsRequest): Promise<ListLatestWarningsResponse>;
+  }
 
   type SendCommandRequest = {
     body: Command;
@@ -108,6 +119,7 @@ declare namespace SDK {
       offset?: number;
       sort?: string;
       select?: number;
+      _exist?: [string];
 
       filter: {
         onsite?: string;
@@ -141,6 +153,7 @@ declare namespace SDK {
         loc?: string;
         distance?: number;
         unit?: "km" | "m";
+        "overall.status"?: string;
       };
     };
   };
@@ -279,6 +292,70 @@ declare namespace SDK {
 
   type ListBancisResponse = {
     body: [Banci];
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
+  type ListWarningsRequest = {
+    query: {
+      limit?: number;
+      offset?: string;
+      sort?: string;
+      select?: string;
+
+      filter: {
+        type?: string;
+        ns: {
+          $regex?: string;
+        };
+        warningAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        line?: string;
+        plate?: string;
+        vehicle?: string;
+        vehicleModel?: string;
+        vehicleNo?: string;
+        vehicleProducer?: string;
+      };
+    };
+  };
+
+  type ListWarningsResponse = {
+    body: [Warning];
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
+  type ListLatestWarningsRequest = {
+    query: {
+      limit?: number;
+      offset?: string;
+
+      filter: {
+        type?: string;
+        ns: {
+          $regex?: string;
+        };
+        warningAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        line?: string;
+        plate?: string;
+        vehicle?: string;
+        vehicleModel?: string;
+        vehicleNo?: string;
+        vehicleProducer?: string;
+      };
+    };
+  };
+
+  type ListLatestWarningsResponse = {
+    body: [Warning];
     headers: {
       xTotalCount: string;
     };
@@ -817,6 +894,24 @@ declare namespace SDK {
     sfyy: string;
     ldlx: string;
     sxx: string;
+  };
+  type Warning = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    ns: string;
+    frequency: number;
+    type: string;
+    plate: string;
+    abnormalValues: string;
+    abnormalLocation: string;
+    warningAt: string;
+    vehicle: string;
+    vehicleModel: string;
+    vehicleModelBrief: string;
+    vehicleNo: string;
+    vehicleProducer: string;
+    vehicleMileage: number;
   };
   type Err = {
     name: string;

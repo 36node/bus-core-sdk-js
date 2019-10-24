@@ -304,4 +304,39 @@ export default class SDK {
       });
     },
   };
+  /**
+   * warning's methods
+   */
+  warning = {
+    /**
+     * List all warnings
+     *
+     * @param {ListWarningsRequest} req listWarnings request
+     * @returns {Promise<ListWarningsResponse>} A paged array of warnings
+     */
+    listWarnings: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/warnings`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * 获取车辆最新的warning
+     *
+     * @param {ListLatestWarningsRequest} req listLatestWarnings request
+     * @returns {Promise<ListLatestWarningsResponse>} A paged array of warnings
+     */
+    listLatestWarnings: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/warnings/latest`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }
