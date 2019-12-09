@@ -8,11 +8,13 @@ declare class SDK {
   auth: string;
 
   command: SDK.CommandAPI;
+  event: SDK.EventAPI;
   vehicle: SDK.VehicleAPI;
   line: SDK.LineAPI;
   producer: SDK.ProducerAPI;
   park: SDK.ParkAPI;
   banci: SDK.BanciAPI;
+  warning: SDK.WarningAPI;
 }
 
 declare namespace SDK {
@@ -26,6 +28,12 @@ declare namespace SDK {
      * Send a command
      */
     sendCommand(req: SendCommandRequest): Promise<SendCommandResponse>;
+  }
+  export interface EventAPI {
+    /**
+     * create (external) event
+     */
+    createEvent(req: CreateEventRequest): Promise<CreateEventResponse>;
   }
   export interface VehicleAPI {
     /**
@@ -52,6 +60,12 @@ declare namespace SDK {
      * Get statistics for vehicles
      */
     getStatistics(req: GetStatisticsRequest): Promise<GetStatisticsResponse>;
+    /**
+     * Get statistics for vehicles soh
+     */
+    getVehicleSohStatistics(
+      req: GetVehicleSohStatisticsRequest
+    ): Promise<GetVehicleSohStatisticsResponse>;
   }
   export interface LineAPI {
     /**
@@ -93,6 +107,16 @@ declare namespace SDK {
      */
     listBancis(req: ListBancisRequest): Promise<ListBancisResponse>;
   }
+  export interface WarningAPI {
+    /**
+     * List all warnings
+     */
+    listWarnings(req: ListWarningsRequest): Promise<ListWarningsResponse>;
+    /**
+     * 获取车辆最新的warning
+     */
+    listLatestWarnings(req: ListLatestWarningsRequest): Promise<ListLatestWarningsResponse>;
+  }
 
   type SendCommandRequest = {
     body: Command;
@@ -102,12 +126,21 @@ declare namespace SDK {
     body: Command;
   };
 
+  type CreateEventRequest = {
+    body: Event;
+  };
+
+  type CreateEventResponse = {
+    body: Event;
+  };
+
   type ListVehiclesRequest = {
     query: {
       limit?: number;
       offset?: number;
       sort?: string;
       select?: number;
+      _exist?: [string];
 
       filter: {
         onsite?: string;
@@ -141,6 +174,7 @@ declare namespace SDK {
         loc?: string;
         distance?: number;
         unit?: "km" | "m";
+        "overall.status"?: string;
       };
     };
   };
@@ -199,6 +233,25 @@ declare namespace SDK {
     body: VehicleStatistics;
   };
 
+  type GetVehicleSohStatisticsRequest = {
+    query: {
+      group?: string;
+
+      filter: {
+        line?: string;
+        producer?: string;
+        modelBrief?: string;
+        ns: {
+          $regex?: string;
+        };
+      };
+    };
+  };
+
+  type GetVehicleSohStatisticsResponse = {
+    body: [VehicleSohStatistics];
+  };
+
   type ListLinesRequest = {
     query: {
       limit?: number;
@@ -249,6 +302,16 @@ declare namespace SDK {
     lineId: string;
   };
 
+  type ListProducersRequest = {
+    query: {
+      filter: {
+        ns: {
+          $regex?: string;
+        };
+      };
+    };
+  };
+
   type ListProducersResponse = {
     body: [Producer];
   };
@@ -284,12 +347,83 @@ declare namespace SDK {
     };
   };
 
+  type ListWarningsRequest = {
+    query: {
+      limit?: number;
+      offset?: string;
+      sort?: string;
+      select?: string;
+
+      filter: {
+        type?: string;
+        ns: {
+          $regex?: string;
+        };
+        warningAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        line?: string;
+        plate?: string;
+        vehicle?: string;
+        vehicleModel?: string;
+        vehicleNo?: string;
+        vehicleProducer?: string;
+      };
+    };
+  };
+
+  type ListWarningsResponse = {
+    body: [Warning];
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
+  type ListLatestWarningsRequest = {
+    query: {
+      limit?: number;
+      offset?: string;
+
+      filter: {
+        type?: string;
+        ns: {
+          $regex?: string;
+        };
+        warningAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        line?: string;
+        plate?: string;
+        vehicle?: string;
+        vehicleModel?: string;
+        vehicleNo?: string;
+        vehicleProducer?: string;
+      };
+    };
+  };
+
+  type ListLatestWarningsResponse = {
+    body: [Warning];
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
   type Command = {
     id: string;
     flag: string;
     command: string;
     vin: string;
     at: string;
+    body: {};
+  };
+  type Event = {
+    flag: string;
+    event: string;
+    vin: string;
+    ns: string;
     body: {};
   };
   type Vehicle = {
@@ -586,6 +720,7 @@ declare namespace SDK {
   };
   type Producer = {
     name: string;
+    ns: string;
     modelBirefs: string;
     models: string;
   };
@@ -787,6 +922,10 @@ declare namespace SDK {
     speed: number;
     totalCurrent: number;
   };
+  type VehicleSohStatistics = {
+    key: string;
+    count: string;
+  };
   type VehicleStatistics = {
     onsiteVehicles: number;
     totalVehicles: number;
@@ -817,6 +956,24 @@ declare namespace SDK {
     sfyy: string;
     ldlx: string;
     sxx: string;
+  };
+  type Warning = {
+    id: string;
+    createdAt: string;
+    updatedAt: string;
+    ns: string;
+    frequency: number;
+    type: string;
+    plate: string;
+    abnormalValues: string;
+    abnormalLocation: string;
+    warningAt: string;
+    vehicle: string;
+    vehicleModel: string;
+    vehicleModelBrief: string;
+    vehicleNo: string;
+    vehicleProducer: string;
+    vehicleMileage: number;
   };
   type Err = {
     name: string;

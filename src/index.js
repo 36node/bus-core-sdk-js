@@ -55,6 +55,28 @@ export default class SDK {
     },
   };
   /**
+   * event's methods
+   */
+  event = {
+    /**
+     * create (external) event
+     *
+     * @param {CreateEventRequest} req createEvent request
+     * @returns {Promise<CreateEventResponse>} The snapshot created
+     */
+    createEvent: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for createEvent");
+
+      return fetch(`${this.base}/events`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
    * vehicle's methods
    */
   vehicle = {
@@ -152,6 +174,21 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/statistics/vehicles`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Get statistics for vehicles soh
+     *
+     * @param {GetVehicleSohStatisticsRequest} req getVehicleSohStatistics request
+     * @returns {Promise<GetVehicleSohStatisticsResponse>} Statistics of an vehicle
+     */
+    getVehicleSohStatistics: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/statistics/vehicles/soh`, {
         method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
@@ -256,10 +293,11 @@ export default class SDK {
      * @returns {Promise<ListProducersResponse>} A paged array of vehicle producer
      */
     listProducers: (req = {}) => {
-      const { headers } = req;
+      const { query, headers } = req;
 
       return fetch(`${this.base}/producers`, {
         method: "GET",
+        query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
     },
@@ -298,6 +336,41 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/bancis`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * warning's methods
+   */
+  warning = {
+    /**
+     * List all warnings
+     *
+     * @param {ListWarningsRequest} req listWarnings request
+     * @returns {Promise<ListWarningsResponse>} A paged array of warnings
+     */
+    listWarnings: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/warnings`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * 获取车辆最新的warning
+     *
+     * @param {ListLatestWarningsRequest} req listLatestWarnings request
+     * @returns {Promise<ListLatestWarningsResponse>} A paged array of warnings
+     */
+    listLatestWarnings: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/warnings/latest`, {
         method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
