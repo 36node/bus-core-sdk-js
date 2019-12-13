@@ -106,6 +106,10 @@ declare namespace SDK {
      * List all bancis with filters
      */
     listBancis(req: ListBancisRequest): Promise<ListBancisResponse>;
+    /**
+     * Delete a banci by id
+     */
+    deleteBanci(req: DeleteBanciRequest): Promise<DeleteBanciResponse>;
   }
   export interface WarningAPI {
     /**
@@ -345,6 +349,10 @@ declare namespace SDK {
     headers: {
       xTotalCount: string;
     };
+  };
+
+  type DeleteBanciRequest = {
+    banciId: string;
   };
 
   type ListWarningsRequest = {

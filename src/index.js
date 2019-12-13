@@ -341,6 +341,22 @@ export default class SDK {
         headers: { Authorization: this.auth, ...headers },
       });
     },
+    /**
+     * Delete a banci by id
+     *
+     * @param {DeleteBanciRequest} req deleteBanci request
+     * @returns {Promise<DeleteBanciResponse>} banci deleted
+     */
+    deleteBanci: (req = {}) => {
+      const { banciId, headers } = req;
+
+      if (!banciId) throw new Error("banciId is required for deleteBanci");
+
+      return fetch(`${this.base}/bancis/${banciId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
   };
   /**
    * warning's methods
