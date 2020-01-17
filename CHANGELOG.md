@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.26](https://github.com/36node/bus-core-sdk-js/compare/v0.1.25...v0.1.26) (2020-01-17)
+
 ### [0.1.25](https://github.com/36node/bus-core-sdk-js/compare/v0.1.24...v0.1.25) (2019-12-13)
 
 ### [0.1.24](https://github.com/36node/bus-core-sdk-js/compare/v0.1.23...v0.1.24) (2019-12-13)
