@@ -194,6 +194,23 @@ export default class SDK {
         headers: { Authorization: this.auth, ...headers },
       });
     },
+    /**
+     * Get statistics for vehicles air
+     *
+     * @param {GetVehicleAirStatisticsRequest} req getVehicleAirStatistics request
+     * @returns {Promise<GetVehicleAirStatisticsResponse>} Statistics of an vehicle air
+     */
+    getVehicleAirStatistics: (req = {}) => {
+      const { query, headers } = req;
+
+      if (!query) throw new Error("query is required for vehicle");
+
+      return fetch(`${this.base}/statistics/vehicles/air`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
   };
   /**
    * line's methods
@@ -387,6 +404,28 @@ export default class SDK {
       const { query, headers } = req;
 
       return fetch(`${this.base}/warnings/latest`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * weather's methods
+   */
+  weather = {
+    /**
+     * Get weather
+     *
+     * @param {GetWeatherRequest} req getWeather request
+     * @returns {Promise<GetWeatherResponse>} Current weather of location
+     */
+    getWeather: (req = {}) => {
+      const { date, query, headers } = req;
+
+      if (!date) throw new Error("date is required for getWeather");
+
+      return fetch(`${this.base}/weather/${date}`, {
         method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },

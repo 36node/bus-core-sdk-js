@@ -15,6 +15,7 @@ declare class SDK {
   park: SDK.ParkAPI;
   banci: SDK.BanciAPI;
   warning: SDK.WarningAPI;
+  weather: SDK.WeatherAPI;
 }
 
 declare namespace SDK {
@@ -66,6 +67,12 @@ declare namespace SDK {
     getVehicleSohStatistics(
       req: GetVehicleSohStatisticsRequest
     ): Promise<GetVehicleSohStatisticsResponse>;
+    /**
+     * Get statistics for vehicles air
+     */
+    getVehicleAirStatistics(
+      req: GetVehicleAirStatisticsRequest
+    ): Promise<GetVehicleAirStatisticsResponse>;
   }
   export interface LineAPI {
     /**
@@ -120,6 +127,12 @@ declare namespace SDK {
      * 获取车辆最新的warning
      */
     listLatestWarnings(req: ListLatestWarningsRequest): Promise<ListLatestWarningsResponse>;
+  }
+  export interface WeatherAPI {
+    /**
+     * Get weather
+     */
+    getWeather(req: GetWeatherRequest): Promise<GetWeatherResponse>;
   }
 
   type SendCommandRequest = {
@@ -254,6 +267,20 @@ declare namespace SDK {
 
   type GetVehicleSohStatisticsResponse = {
     body: [VehicleSohStatistics];
+  };
+
+  type GetVehicleAirStatisticsRequest = {
+    query: {
+      filter: {
+        ns: {
+          $regex: string;
+        };
+      };
+    };
+  };
+
+  type GetVehicleAirStatisticsResponse = {
+    body: VehicleAirStatistics;
   };
 
   type ListLinesRequest = {
@@ -419,6 +446,20 @@ declare namespace SDK {
     };
   };
 
+  type GetWeatherRequest = {
+    date: string;
+
+    query: {
+      filter: {
+        location?: string;
+      };
+    };
+  };
+
+  type GetWeatherResponse = {
+    body: [Weather];
+  };
+
   type Command = {
     id: string;
     flag: string;
@@ -448,6 +489,7 @@ declare namespace SDK {
     onsite: boolean;
     online: boolean;
     repairing: boolean;
+    labels: [string];
     brands: string;
     capacity: number;
     no: string;
@@ -934,6 +976,11 @@ declare namespace SDK {
     key: string;
     count: string;
   };
+  type VehicleAirStatistics = {
+    airOpenCount: number;
+    averageInsideTemp: number;
+    airOpenRatio: number;
+  };
   type VehicleStatistics = {
     onsiteVehicles: number;
     totalVehicles: number;
@@ -982,6 +1029,25 @@ declare namespace SDK {
     vehicleNo: string;
     vehicleProducer: string;
     vehicleMileage: number;
+  };
+  type Weather = {
+    text: string;
+    code: string;
+    temperature: number;
+    humidity: number;
+    lastUpdated: string;
+    date: string;
+    text_day: string;
+    code_day: string;
+    text_night: string;
+    code_night: string;
+    high: string;
+    low: string;
+    high_humidity: string;
+    low_humidity: string;
+    wind_direction: string;
+    wind_direction_degree: string;
+    wind_speed: string;
   };
   type Err = {
     name: string;
