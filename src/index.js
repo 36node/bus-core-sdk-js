@@ -431,5 +431,20 @@ export default class SDK {
         headers: { Authorization: this.auth, ...headers },
       });
     },
+    /**
+     * Get weather last 24 hours
+     *
+     * @param {GetWeatherLast24HoursRequest} req getWeatherLast24Hours request
+     * @returns {Promise<GetWeatherLast24HoursResponse>} Last 24 hours weather of location
+     */
+    getWeatherLast24Hours: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/weatherLast24Hours`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
   };
 }

@@ -133,6 +133,12 @@ declare namespace SDK {
      * Get weather
      */
     getWeather(req: GetWeatherRequest): Promise<GetWeatherResponse>;
+    /**
+     * Get weather last 24 hours
+     */
+    getWeatherLast24Hours(
+      req: GetWeatherLast24HoursRequest
+    ): Promise<GetWeatherLast24HoursResponse>;
   }
 
   type SendCommandRequest = {
@@ -457,6 +463,18 @@ declare namespace SDK {
   };
 
   type GetWeatherResponse = {
+    body: [Weather];
+  };
+
+  type GetWeatherLast24HoursRequest = {
+    query: {
+      filter: {
+        location?: string;
+      };
+    };
+  };
+
+  type GetWeatherLast24HoursResponse = {
     body: [Weather];
   };
 
