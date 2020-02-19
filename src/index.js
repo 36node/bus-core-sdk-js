@@ -137,8 +137,7 @@ export default class SDK {
     updateVehicle: (req = {}) => {
       const { vehicleId, headers, body } = req;
 
-      if (!vehicleId)
-        throw new Error("vehicleId is required for updateVehicle");
+      if (!vehicleId) throw new Error("vehicleId is required for updateVehicle");
       if (!body) throw new Error("requetBody is required for updateVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
@@ -156,8 +155,7 @@ export default class SDK {
     deleteVehicle: (req = {}) => {
       const { vehicleId, headers } = req;
 
-      if (!vehicleId)
-        throw new Error("vehicleId is required for deleteVehicle");
+      if (!vehicleId) throw new Error("vehicleId is required for deleteVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
         method: "DELETE",
@@ -443,6 +441,83 @@ export default class SDK {
       return fetch(`${this.base}/weatherLast24Hours`, {
         method: "GET",
         query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
+  /**
+   * push's methods
+   */
+  push = {
+    /**
+     * Get push setting by userId
+     *
+     * @param {GetPushSetRequest} req getPushSet request
+     * @returns {Promise<GetPushSetResponse>} The push setting with given userId
+     */
+    getPushSet: (req = {}) => {
+      const { userId, query, headers } = req;
+
+      if (!userId) throw new Error("userId is required for getPushSet");
+      if (!query) throw new Error("query is required for push");
+
+      return fetch(`${this.base}/push/${userId}/setting`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Update push setting
+     *
+     * @param {UpdatePushSetRequest} req updatePushSet request
+     * @returns {Promise<UpdatePushSetResponse>} The pust setting
+     */
+    updatePushSet: (req = {}) => {
+      const { userId, headers, body } = req;
+
+      if (!userId) throw new Error("userId is required for updatePushSet");
+      if (!body) throw new Error("requetBody is required for updatePushSet");
+
+      return fetch(`${this.base}/push/${userId}/setting`, {
+        method: "PATCH",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Get push device by userId
+     *
+     * @param {GetPushDeviceRequest} req getPushDevice request
+     * @returns {Promise<GetPushDeviceResponse>} The push device with given userId
+     */
+    getPushDevice: (req = {}) => {
+      const { userId, query, headers } = req;
+
+      if (!userId) throw new Error("userId is required for getPushDevice");
+      if (!query) throw new Error("query is required for push");
+
+      return fetch(`${this.base}/push/${userId}/device`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Update device
+     *
+     * @param {UpdatePushDeviceRequest} req updatePushDevice request
+     * @returns {Promise<UpdatePushDeviceResponse>} The pust device
+     */
+    updatePushDevice: (req = {}) => {
+      const { userId, headers, body } = req;
+
+      if (!userId) throw new Error("userId is required for updatePushDevice");
+      if (!body) throw new Error("requetBody is required for updatePushDevice");
+
+      return fetch(`${this.base}/push/${userId}/device`, {
+        method: "PATCH",
+        body,
         headers: { Authorization: this.auth, ...headers },
       });
     },

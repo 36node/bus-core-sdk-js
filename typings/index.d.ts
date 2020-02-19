@@ -16,6 +16,7 @@ declare class SDK {
   banci: SDK.BanciAPI;
   warning: SDK.WarningAPI;
   weather: SDK.WeatherAPI;
+  push: SDK.PushAPI;
 }
 
 declare namespace SDK {
@@ -139,6 +140,24 @@ declare namespace SDK {
     getWeatherLast24Hours(
       req: GetWeatherLast24HoursRequest
     ): Promise<GetWeatherLast24HoursResponse>;
+  }
+  export interface PushAPI {
+    /**
+     * Get push setting by userId
+     */
+    getPushSet(req: GetPushSetRequest): Promise<GetPushSetResponse>;
+    /**
+     * Update push setting
+     */
+    updatePushSet(req: UpdatePushSetRequest): Promise<UpdatePushSetResponse>;
+    /**
+     * Get push device by userId
+     */
+    getPushDevice(req: GetPushDeviceRequest): Promise<GetPushDeviceResponse>;
+    /**
+     * Update device
+     */
+    updatePushDevice(req: UpdatePushDeviceRequest): Promise<UpdatePushDeviceResponse>;
   }
 
   type SendCommandRequest = {
@@ -476,6 +495,53 @@ declare namespace SDK {
 
   type GetWeatherLast24HoursResponse = {
     body: [Weather];
+  };
+
+  type GetPushSetRequest = {
+    userId: string;
+
+    query: {
+      filter: {
+        rootNs: string;
+      };
+    };
+  };
+
+  type GetPushSetResponse = {
+    body: PushSet;
+  };
+
+  type UpdatePushSetRequest = {
+    userId: string;
+    body: PushSetUpdateBody;
+  };
+
+  type UpdatePushSetResponse = {
+    body: PushSet;
+  };
+
+  type GetPushDeviceRequest = {
+    userId: string;
+
+    query: {
+      filter: {
+        rootNs: string;
+        registrationId: string;
+      };
+    };
+  };
+
+  type GetPushDeviceResponse = {
+    body: PushDevice;
+  };
+
+  type UpdatePushDeviceRequest = {
+    userId: string;
+    body: PushDeviceUpdateBody;
+  };
+
+  type UpdatePushDeviceResponse = {
+    body: PushDevice;
   };
 
   type Command = {
@@ -1071,5 +1137,38 @@ declare namespace SDK {
     name: string;
     code: string;
     message: string;
+  };
+  type PushSetUpdateBody = {
+    id: string;
+    rootNs: string;
+    ns: string;
+    level1: boolean;
+    level2: boolean;
+    level3: boolean;
+  };
+  type PushSet = {
+    id: string;
+    rootNs: string;
+    ns: string;
+    userId: string;
+    level1: boolean;
+    level2: boolean;
+    level3: boolean;
+    createdAt: string;
+    updatedAt: string;
+  };
+  type PushDeviceUpdateBody = {
+    rootNs: string;
+    ns: string;
+    registrationId: string;
+  };
+  type PushDevice = {
+    id: string;
+    rootNs: string;
+    ns: string;
+    userId: string;
+    registrationId: string;
+    createdAt: string;
+    updatedAt: string;
   };
 }
