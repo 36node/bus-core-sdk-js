@@ -158,6 +158,14 @@ declare namespace SDK {
      * Update device
      */
     updatePushDevice(req: UpdatePushDeviceRequest): Promise<UpdatePushDeviceResponse>;
+    /**
+     * List all setting
+     */
+    listPushSet(req: ListPushSetRequest): Promise<ListPushSetResponse>;
+    /**
+     * List all devices
+     */
+    listPushDevice(req: ListPushDeviceRequest): Promise<ListPushDeviceResponse>;
   }
 
   type SendCommandRequest = {
@@ -544,6 +552,47 @@ declare namespace SDK {
     body: PushDevice;
   };
 
+  type ListPushSetRequest = {
+    query: {
+      limit?: number;
+      offset?: string;
+      select?: number;
+
+      filter: {
+        userId?: string;
+        rootNs?: string;
+      };
+    };
+  };
+
+  type ListPushSetResponse = {
+    body: [PushSet];
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
+  type ListPushDeviceRequest = {
+    query: {
+      limit?: number;
+      offset?: string;
+      select?: number;
+
+      filter: {
+        userId?: string;
+        rootNs?: string;
+        registrationId?: string;
+      };
+    };
+  };
+
+  type ListPushDeviceResponse = {
+    body: [PushDevice];
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
   type Command = {
     id: string;
     flag: string;
@@ -589,7 +638,7 @@ declare namespace SDK {
     photos: [string];
     place: string;
     plate: string;
-    plateAt: string;
+    platedAt: string;
     powerBy: "FUEL" | "HYBIRD" | "DUAL-ENERGY" | "PHEV" | "E-REV" | "ELECTRIC";
     producer: string;
     purchasedAt: string;

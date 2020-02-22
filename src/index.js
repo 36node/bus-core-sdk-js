@@ -137,7 +137,8 @@ export default class SDK {
     updateVehicle: (req = {}) => {
       const { vehicleId, headers, body } = req;
 
-      if (!vehicleId) throw new Error("vehicleId is required for updateVehicle");
+      if (!vehicleId)
+        throw new Error("vehicleId is required for updateVehicle");
       if (!body) throw new Error("requetBody is required for updateVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
@@ -155,7 +156,8 @@ export default class SDK {
     deleteVehicle: (req = {}) => {
       const { vehicleId, headers } = req;
 
-      if (!vehicleId) throw new Error("vehicleId is required for deleteVehicle");
+      if (!vehicleId)
+        throw new Error("vehicleId is required for deleteVehicle");
 
       return fetch(`${this.base}/vehicles/${vehicleId}`, {
         method: "DELETE",
@@ -461,7 +463,7 @@ export default class SDK {
       if (!userId) throw new Error("userId is required for getPushSet");
       if (!query) throw new Error("query is required for push");
 
-      return fetch(`${this.base}/push/${userId}/setting`, {
+      return fetch(`${this.base}/push/setting/${userId}`, {
         method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
@@ -479,7 +481,7 @@ export default class SDK {
       if (!userId) throw new Error("userId is required for updatePushSet");
       if (!body) throw new Error("requetBody is required for updatePushSet");
 
-      return fetch(`${this.base}/push/${userId}/setting`, {
+      return fetch(`${this.base}/push/setting/${userId}`, {
         method: "PATCH",
         body,
         headers: { Authorization: this.auth, ...headers },
@@ -497,7 +499,7 @@ export default class SDK {
       if (!userId) throw new Error("userId is required for getPushDevice");
       if (!query) throw new Error("query is required for push");
 
-      return fetch(`${this.base}/push/${userId}/device`, {
+      return fetch(`${this.base}/push/device/${userId}`, {
         method: "GET",
         query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
@@ -515,9 +517,39 @@ export default class SDK {
       if (!userId) throw new Error("userId is required for updatePushDevice");
       if (!body) throw new Error("requetBody is required for updatePushDevice");
 
-      return fetch(`${this.base}/push/${userId}/device`, {
+      return fetch(`${this.base}/push/device/${userId}`, {
         method: "PATCH",
         body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * List all setting
+     *
+     * @param {ListPushSetRequest} req listPushSet request
+     * @returns {Promise<ListPushSetResponse>} A paged array of setting
+     */
+    listPushSet: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/push/setting`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * List all devices
+     *
+     * @param {ListPushDeviceRequest} req listPushDevice request
+     * @returns {Promise<ListPushDeviceResponse>} A paged array of devices
+     */
+    listPushDevice: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/push/device`, {
+        method: "GET",
+        query: denormalize(query),
         headers: { Authorization: this.auth, ...headers },
       });
     },
