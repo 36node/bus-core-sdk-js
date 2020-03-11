@@ -1,6 +1,6 @@
 {
   "name": "@36node/bus-core-sdk",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "A SDK boilerplate.",
   "repository": {
     "url": "36node/bus-core-sdk-js",
@@ -24,7 +24,7 @@
   "scripts": {
     "build": "sketch build",
     "format": "prettier --trailing-comma es5 --write 'src/**/*.js'",
-    "gen": "swagen sdk https://api.uat.bus.36node.com/core/v0/openapi.yml",
+    "gen": "swagen sdk ../bus-core/openapi.yml",
     "lint": "sketch lint src --fix",
     "release": "standard-version",
     "start": "bin/json-server.js",
