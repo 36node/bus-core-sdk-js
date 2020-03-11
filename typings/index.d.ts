@@ -17,6 +17,7 @@ declare class SDK {
   warning: SDK.WarningAPI;
   weather: SDK.WeatherAPI;
   push: SDK.PushAPI;
+  optionalVehicle: SDK.OptionalVehicleAPI;
 }
 
 declare namespace SDK {
@@ -166,6 +167,12 @@ declare namespace SDK {
      * List all devices
      */
     listPushDevice(req: ListPushDeviceRequest): Promise<ListPushDeviceResponse>;
+  }
+  export interface OptionalVehicleAPI {
+    /**
+     * List all optional vehicles with filters
+     */
+    listOptionalVehicles(req: ListOptionalVehiclesRequest): Promise<ListOptionalVehiclesResponse>;
   }
 
   type SendCommandRequest = {
@@ -588,6 +595,19 @@ declare namespace SDK {
 
   type ListPushDeviceResponse = {
     body: [PushDevice];
+    headers: {
+      xTotalCount: string;
+    };
+  };
+
+  type ListOptionalVehiclesRequest = {
+    query: {
+      sort?: string;
+    };
+  };
+
+  type ListOptionalVehiclesResponse = {
+    body: [OptionalVehicle];
     headers: {
       xTotalCount: string;
     };
@@ -1144,6 +1164,18 @@ declare namespace SDK {
     sfyy: string;
     ldlx: string;
     sxx: string;
+  };
+  type OptionalVehicle = {
+    id: string;
+    ns: string;
+    optionalNs: string;
+    newDepartment: string;
+    line: string;
+    optionalLine: string;
+    newLine: string;
+    plate: string;
+    banci: string;
+    labels: [string];
   };
   type Warning = {
     id: string;

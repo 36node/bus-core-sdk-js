@@ -554,4 +554,24 @@ export default class SDK {
       });
     },
   };
+  /**
+   * optionalVehicle's methods
+   */
+  optionalVehicle = {
+    /**
+     * List all optional vehicles with filters
+     *
+     * @param {ListOptionalVehiclesRequest} req listOptionalVehicles request
+     * @returns {Promise<ListOptionalVehiclesResponse>} A paged array of optional vehicles
+     */
+    listOptionalVehicles: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/optional-vehicles`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }
