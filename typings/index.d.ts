@@ -173,6 +173,12 @@ declare namespace SDK {
      * List all optional vehicles with filters
      */
     listOptionalVehicles(req: ListOptionalVehiclesRequest): Promise<ListOptionalVehiclesResponse>;
+    /**
+     * Delete a optional vehicle by id
+     */
+    deleteOptionalVehicle(
+      req: DeleteOptionalVehicleRequest
+    ): Promise<DeleteOptionalVehicleResponse>;
   }
 
   type SendCommandRequest = {
@@ -611,6 +617,10 @@ declare namespace SDK {
     headers: {
       xTotalCount: string;
     };
+  };
+
+  type DeleteOptionalVehicleRequest = {
+    vehicleId: string;
   };
 
   type Command = {

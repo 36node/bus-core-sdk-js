@@ -573,5 +573,22 @@ export default class SDK {
         headers: { Authorization: this.auth, ...headers },
       });
     },
+    /**
+     * Delete a optional vehicle by id
+     *
+     * @param {DeleteOptionalVehicleRequest} req deleteOptionalVehicle request
+     * @returns {Promise<DeleteOptionalVehicleResponse>} vehicle deleted
+     */
+    deleteOptionalVehicle: (req = {}) => {
+      const { vehicleId, headers } = req;
+
+      if (!vehicleId)
+        throw new Error("vehicleId is required for deleteOptionalVehicle");
+
+      return fetch(`${this.base}/optional-vehicles`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
   };
 }
