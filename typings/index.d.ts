@@ -17,7 +17,6 @@ declare class SDK {
   warning: SDK.WarningAPI;
   weather: SDK.WeatherAPI;
   push: SDK.PushAPI;
-  optionalVehicle: SDK.OptionalVehicleAPI;
 }
 
 declare namespace SDK {
@@ -59,6 +58,12 @@ declare namespace SDK {
      *
      */
     deleteVehicle(req: DeleteVehicleRequest): Promise<DeleteVehicleResponse>;
+    /**
+     * Get vehicles stateHistory
+     */
+    getVehicleStateHistory(
+      req: GetVehicleStateHistoryRequest
+    ): Promise<GetVehicleStateHistoryResponse>;
     /**
      * Get statistics for vehicles
      */
@@ -168,18 +173,6 @@ declare namespace SDK {
      */
     listPushDevice(req: ListPushDeviceRequest): Promise<ListPushDeviceResponse>;
   }
-  export interface OptionalVehicleAPI {
-    /**
-     * List all optional vehicles with filters
-     */
-    listOptionalVehicles(req: ListOptionalVehiclesRequest): Promise<ListOptionalVehiclesResponse>;
-    /**
-     * Delete a optional vehicle by id
-     */
-    deleteOptionalVehicle(
-      req: DeleteOptionalVehicleRequest
-    ): Promise<DeleteOptionalVehicleResponse>;
-  }
 
   type SendCommandRequest = {
     body: Command;
@@ -276,6 +269,26 @@ declare namespace SDK {
 
   type DeleteVehicleRequest = {
     vehicleId: string;
+  };
+
+  type GetVehicleStateHistoryRequest = {
+    query: {
+      limit?: number;
+      offset?: number;
+      sort?: string;
+      select?: number;
+
+      filter: {
+        at: {
+          $gt?: string;
+          $lt?: string;
+        };
+      };
+    };
+  };
+
+  type GetVehicleStateHistoryResponse = {
+    body: VehicleStateHistory;
   };
 
   type GetStatisticsRequest = {
@@ -604,23 +617,6 @@ declare namespace SDK {
     headers: {
       xTotalCount: string;
     };
-  };
-
-  type ListOptionalVehiclesRequest = {
-    query: {
-      sort?: string;
-    };
-  };
-
-  type ListOptionalVehiclesResponse = {
-    body: [OptionalVehicle];
-    headers: {
-      xTotalCount: string;
-    };
-  };
-
-  type DeleteOptionalVehicleRequest = {
-    vehicleId: string;
   };
 
   type Command = {
@@ -1175,18 +1171,6 @@ declare namespace SDK {
     ldlx: string;
     sxx: string;
   };
-  type OptionalVehicle = {
-    id: string;
-    ns: string;
-    optionalNs: string;
-    newDepartment: string;
-    line: string;
-    optionalLine: string;
-    newLine: string;
-    plate: string;
-    banci: string;
-    labels: [string];
-  };
   type Warning = {
     id: string;
     createdAt: string;
@@ -1223,6 +1207,13 @@ declare namespace SDK {
     wind_direction: string;
     wind_direction_degree: string;
     wind_speed: string;
+  };
+  type VehicleStateHistory = {
+    running: string;
+    charging: string;
+    stop: string;
+    at: string;
+    hour: string;
   };
   type Err = {
     name: string;

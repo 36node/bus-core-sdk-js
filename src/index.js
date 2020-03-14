@@ -165,6 +165,21 @@ export default class SDK {
       });
     },
     /**
+     * Get vehicles stateHistory
+     *
+     * @param {GetVehicleStateHistoryRequest} req getVehicleStateHistory request
+     * @returns {Promise<GetVehicleStateHistoryResponse>} The vehicle state history
+     */
+    getVehicleStateHistory: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/stateHistory`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
      * Get statistics for vehicles
      *
      * @param {GetStatisticsRequest} req getStatistics request
@@ -550,43 +565,6 @@ export default class SDK {
       return fetch(`${this.base}/push/device`, {
         method: "GET",
         query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-  };
-  /**
-   * optionalVehicle's methods
-   */
-  optionalVehicle = {
-    /**
-     * List all optional vehicles with filters
-     *
-     * @param {ListOptionalVehiclesRequest} req listOptionalVehicles request
-     * @returns {Promise<ListOptionalVehiclesResponse>} A paged array of optional vehicles
-     */
-    listOptionalVehicles: (req = {}) => {
-      const { query, headers } = req;
-
-      return fetch(`${this.base}/optional-vehicles`, {
-        method: "GET",
-        query: denormalize(query),
-        headers: { Authorization: this.auth, ...headers },
-      });
-    },
-    /**
-     * Delete a optional vehicle by id
-     *
-     * @param {DeleteOptionalVehicleRequest} req deleteOptionalVehicle request
-     * @returns {Promise<DeleteOptionalVehicleResponse>} vehicle deleted
-     */
-    deleteOptionalVehicle: (req = {}) => {
-      const { vehicleId, headers } = req;
-
-      if (!vehicleId)
-        throw new Error("vehicleId is required for deleteOptionalVehicle");
-
-      return fetch(`${this.base}/optional-vehicles`, {
-        method: "DELETE",
         headers: { Authorization: this.auth, ...headers },
       });
     },
