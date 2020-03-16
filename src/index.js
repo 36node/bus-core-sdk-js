@@ -569,4 +569,41 @@ export default class SDK {
       });
     },
   };
+  /**
+   * optionalVehicle's methods
+   */
+  optionalVehicle = {
+    /**
+     * List all optional vehicles with filters
+     *
+     * @param {ListOptionalVehiclesRequest} req listOptionalVehicles request
+     * @returns {Promise<ListOptionalVehiclesResponse>} A paged array of optional vehicles
+     */
+    listOptionalVehicles: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/optional-vehicles`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Delete a optional vehicle by id
+     *
+     * @param {DeleteOptionalVehicleRequest} req deleteOptionalVehicle request
+     * @returns {Promise<DeleteOptionalVehicleResponse>} vehicle deleted
+     */
+    deleteOptionalVehicle: (req = {}) => {
+      const { vehicleId, headers } = req;
+
+      if (!vehicleId)
+        throw new Error("vehicleId is required for deleteOptionalVehicle");
+
+      return fetch(`${this.base}/optional-vehicles/${vehicleId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }
