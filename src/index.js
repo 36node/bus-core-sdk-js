@@ -606,4 +606,24 @@ export default class SDK {
       });
     },
   };
+  /**
+   * chargeRecord's methods
+   */
+  chargeRecord = {
+    /**
+     * List all chargeRecords with filters
+     *
+     * @param {ListChargeRecordsRequest} req listChargeRecords request
+     * @returns {Promise<ListChargeRecordsResponse>} A paged array of charge record
+     */
+    listChargeRecords: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/charge-records`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }

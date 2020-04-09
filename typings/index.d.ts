@@ -18,6 +18,7 @@ declare class SDK {
   weather: SDK.WeatherAPI;
   push: SDK.PushAPI;
   optionalVehicle: SDK.OptionalVehicleAPI;
+  chargeRecord: SDK.ChargeRecordAPI;
 }
 
 declare namespace SDK {
@@ -185,6 +186,12 @@ declare namespace SDK {
     deleteOptionalVehicle(
       req: DeleteOptionalVehicleRequest
     ): Promise<DeleteOptionalVehicleResponse>;
+  }
+  export interface ChargeRecordAPI {
+    /**
+     * List all chargeRecords with filters
+     */
+    listChargeRecords(req: ListChargeRecordsRequest): Promise<ListChargeRecordsResponse>;
   }
 
   type SendCommandRequest = {
@@ -649,6 +656,43 @@ declare namespace SDK {
     vehicleId: string;
   };
 
+  type ListChargeRecordsRequest = {
+    query: {
+      limit?: number;
+      offset?: number;
+      sort?: string;
+      select?: number;
+
+      filter: {
+        startAt: {
+          $gte?: string;
+          $lte?: string;
+        };
+        endAt: {
+          $gt?: string;
+          $lt?: string;
+        };
+        line?: string;
+        producer?: string;
+        modelBrief?: string;
+        no?: string;
+        plate?: string;
+        ns?:
+          | {
+              $regex: string;
+            }
+          | string;
+      };
+    };
+  };
+
+  type ListChargeRecordsResponse = {
+    body: [ChargeRecord];
+    headers: {
+      xTotalCount: number;
+    };
+  };
+
   type Command = {
     id: string;
     flag: string;
@@ -663,6 +707,21 @@ declare namespace SDK {
     vin: string;
     ns: string;
     body: {};
+  };
+  type ChargeRecord = {
+    vehicle: string;
+    ns: string;
+    line: string;
+    modelBrief: string;
+    producer: string;
+    plate: string;
+    labels: [string];
+    no: string;
+    startAt: string;
+    endAt: string;
+    duration: string;
+    startSoc: string;
+    endSoc: string;
   };
   type Vehicle = {
     id: string;
