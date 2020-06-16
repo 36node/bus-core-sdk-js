@@ -626,4 +626,73 @@ export default class SDK {
       });
     },
   };
+  /**
+   * qsoh's methods
+   */
+  qsoh = {
+    /**
+     * List all qSohs with filters
+     *
+     * @param {ListQSohsRequest} req listQSohs request
+     * @returns {Promise<ListQSohsResponse>} A paged array of qsoh
+     */
+    listQSohs: (req = {}) => {
+      const { query, headers } = req;
+
+      return fetch(`${this.base}/qsoh`, {
+        method: "GET",
+        query: denormalize(query),
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * upsert qsoh by vehicle &amp; date
+     *
+     * @param {UpsertQSohRequest} req upsertQSoh request
+     * @returns {Promise<UpsertQSohResponse>} The qsoh created or updated
+     */
+    upsertQSoh: (req = {}) => {
+      const { headers, body } = req;
+
+      if (!body) throw new Error("requetBody is required for upsertQSoh");
+
+      return fetch(`${this.base}/qsoh`, {
+        method: "POST",
+        body,
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     * Get qsoh by id
+     *
+     * @param {GetQSohRequest} req getQSoh request
+     * @returns {Promise<GetQSohResponse>} The qsoh with given id
+     */
+    getQSoh: (req = {}) => {
+      const { qsohId, headers } = req;
+
+      if (!qsohId) throw new Error("qsohId is required for getQSoh");
+
+      return fetch(`${this.base}/qsoh/${qsohId}`, {
+        method: "GET",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+    /**
+     *
+     *
+     * @param {DeleteQSohRequest} req deleteQSoh request
+     * @returns {Promise<DeleteQSohResponse>} qsoh deleted
+     */
+    deleteQSoh: (req = {}) => {
+      const { qsohId, headers } = req;
+
+      if (!qsohId) throw new Error("qsohId is required for deleteQSoh");
+
+      return fetch(`${this.base}/qsoh/${qsohId}`, {
+        method: "DELETE",
+        headers: { Authorization: this.auth, ...headers },
+      });
+    },
+  };
 }

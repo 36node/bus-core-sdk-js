@@ -19,6 +19,7 @@ declare class SDK {
   push: SDK.PushAPI;
   optionalVehicle: SDK.OptionalVehicleAPI;
   chargeRecord: SDK.ChargeRecordAPI;
+  qsoh: SDK.QsohAPI;
 }
 
 declare namespace SDK {
@@ -193,6 +194,24 @@ declare namespace SDK {
      */
     listChargeRecords(req: ListChargeRecordsRequest): Promise<ListChargeRecordsResponse>;
   }
+  export interface QsohAPI {
+    /**
+     * List all qSohs with filters
+     */
+    listQSohs(req: ListQSohsRequest): Promise<ListQSohsResponse>;
+    /**
+     * upsert qsoh by vehicle &amp; date
+     */
+    upsertQSoh(req: UpsertQSohRequest): Promise<UpsertQSohResponse>;
+    /**
+     * Get qsoh by id
+     */
+    getQSoh(req: GetQSohRequest): Promise<GetQSohResponse>;
+    /**
+     *
+     */
+    deleteQSoh(req: DeleteQSohRequest): Promise<DeleteQSohResponse>;
+  }
 
   type SendCommandRequest = {
     body: Command;
@@ -251,6 +270,7 @@ declare namespace SDK {
         distance?: number;
         unit?: "km" | "m";
         "overall.status"?: string;
+        repairWorkshop?: string;
       };
     };
   };
@@ -682,6 +702,7 @@ declare namespace SDK {
               $regex: string;
             }
           | string;
+        period?: string;
       };
     };
   };
@@ -691,6 +712,69 @@ declare namespace SDK {
     headers: {
       xTotalCount: number;
     };
+  };
+
+  type ListQSohsRequest = {
+    query: {
+      limit?: number;
+      offset?: number;
+      sort?: string;
+      select?: number;
+
+      filter: {
+        date: {
+          $gte?: string;
+          $lte?: string;
+        };
+        platedAt: {
+          $gte?: string;
+          $lte?: string;
+        };
+        soh: {
+          $gte?: number;
+          $lte?: number;
+        };
+        line?: string;
+        producer?: string;
+        modelBrief?: string;
+        no?: string;
+        plate?: string;
+        ns?:
+          | {
+              $regex: string;
+            }
+          | string;
+        vehicle?: string;
+        labels?: string;
+      };
+    };
+  };
+
+  type ListQSohsResponse = {
+    body: [QSoh];
+    headers: {
+      xTotalCount: number;
+    };
+  };
+
+  type UpsertQSohRequest = {
+    body: QSohRequestBody;
+  };
+
+  type UpsertQSohResponse = {
+    body: QSoh;
+  };
+
+  type GetQSohRequest = {
+    qsohId: string;
+  };
+
+  type GetQSohResponse = {
+    body: QSoh;
+  };
+
+  type DeleteQSohRequest = {
+    qsohId: string;
   };
 
   type Command = {
@@ -722,6 +806,7 @@ declare namespace SDK {
     duration: string;
     startSoc: string;
     endSoc: string;
+    period: "HIGH" | "LOW" | "NORMAL";
   };
   type Vehicle = {
     id: string;
@@ -962,6 +1047,7 @@ declare namespace SDK {
         obstacleType: "VOID" | "PEOPLE" | "VEHICLE";
       }
     ];
+    repairWorkshop: string;
   };
   type LineCreateBody = {
     name: string;
@@ -1353,5 +1439,29 @@ declare namespace SDK {
     registrationId: string;
     createdAt: string;
     updatedAt: string;
+  };
+  type QSohRequestBody = {
+    vehicle: string;
+    soh: number;
+    date: string;
+  };
+  type QSoh = {
+    id: string;
+    vehicle: string;
+    soh: number;
+    key: string;
+    date: string;
+    producer: string;
+    ns: string;
+    brands: string;
+    no: string;
+    line: string;
+    model: string;
+    modelBrief: string;
+    plate: string;
+    platedAt: string;
+    createdAt: string;
+    updatedAt: string;
+    labels: [string];
   };
 }
